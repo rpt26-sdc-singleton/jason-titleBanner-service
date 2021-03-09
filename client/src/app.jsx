@@ -2,14 +2,30 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import $ from 'jquery';
 
+import Titles from './components/titles.jsx';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      num : 0
+      num : 0,
+      titles: []
     }
     this.onChange = this.onChange.bind(this);
     this.add = this.add.bind(this);
+  }
+
+  // API Get request
+  componentDidMount() {
+    $.get("http://localhost:3000/api/getTitle/get", (data) => {
+      console.log('got response from server', data)
+      this.setState({
+        titles: data
+      })
+    })
+      .done(() => {
+        console.log('successfully received data from API endpoint');
+      })
   }
 
   onChange (e) {
@@ -33,6 +49,9 @@ class App extends React.Component {
         <h4>Enter number of titles to populate</h4>
         <input value = {this.state.num} onChange={this.onChange} />
         <button onClick={this.add}> Add Titles </button>
+        <div>
+          <Titles title={this.state.titles}/>
+        </div>
       </div>
     )
   }

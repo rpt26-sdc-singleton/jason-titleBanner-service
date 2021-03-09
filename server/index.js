@@ -16,6 +16,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/addTitle', title);
 
+app.use('/api/getTitle', title);
+
+
+//TODO second table
 //app.use('/api/getTotalEnrolled', enrolled);
 
 

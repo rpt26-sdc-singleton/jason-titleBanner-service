@@ -4,11 +4,11 @@ let titleBanner = require('../../db/title.model');
 
 const dataGeneratorFunction = require('../example.data')
 
-// router.route('/:id').get((req, res) => {
-//   TitleBanner.findById(req.params.id)
-//     .then(title => res.json(title))
-//     .catch(err => res.status(400).json('Error: ' + err))
-// });
+router.route('/get').get((req, res) => {
+  titleBanner.Title.find().limit(5)
+    .then(data => res.status(200).json(data))
+    .catch(err => res.status(400).json(err))
+});
 
 
 //seeding route

@@ -9,7 +9,6 @@ db.once('open', _ => {
 })
 
 const titleSchema = new Schema({
-  id: Number,
   title: String
 });
 
@@ -18,7 +17,6 @@ let Title = mongoose.model('Title', titleSchema);
 let saveTile = (randomData, cb) => {
   var titleArray = randomData[0].titleName;
   titleArray.forEach((data, index) => {
-    const id = index;
     const title = data;
 
     Title.findOne({title: title}, (err, data) => {
@@ -26,7 +24,6 @@ let saveTile = (randomData, cb) => {
       if (data) cb(`${title} already exists in db`);
       else {
         const repo = new Title({
-          id,
           title
         });
         repo.save()
