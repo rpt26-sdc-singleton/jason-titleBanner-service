@@ -5,7 +5,7 @@ let titleBanner = require('../../db/title.model');
 const dataGeneratorFunction = require('../example.data')
 
 router.route('/get').get((req, res) => {
-  titleBanner.Title.find().limit(5)
+  titleBanner.Title.find().sort({_id:-1}).limit(5)
     .then(data => res.status(200).json(data))
     .catch(err => res.status(400).json(err))
 });
