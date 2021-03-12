@@ -1,6 +1,6 @@
 const faker = require('faker');
 
-let exampleData = (index) => {
+let exampleDataGenerator = (index) => {
   var titleName = [{
     titleName: []
   }];
@@ -11,8 +11,8 @@ let exampleData = (index) => {
   }
 
   return titleName;
-}
+};
 
 module.exports = {
-  exampleData
-}
+  exampleDataGenerator
+};

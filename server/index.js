@@ -14,9 +14,9 @@ let port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/api/addTitle', title);
 
-app.use('/api/getTitle', title);
+//routes to get and add title
+app.use('/api', title);
 
 
 //TODO second table
