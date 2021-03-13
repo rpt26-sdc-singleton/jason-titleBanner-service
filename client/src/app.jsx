@@ -17,7 +17,7 @@ class App extends React.Component {
 
   // API Get request
   componentDidMount() {
-    $.get('http://localhost:3000/api/getTitle', (data) => {
+    $.get('http://localhost:4000/api/getTitle', (data) => {
       console.log('got response from server', data);
       this.setState({
         titles: data
@@ -37,7 +37,7 @@ class App extends React.Component {
   add() {
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:3000/api/addTitle',
+      url: 'http://localhost:4000/api/addTitle',
       data: {total: this.state.num},
       success: () => console.log('successfully made a post')
     });

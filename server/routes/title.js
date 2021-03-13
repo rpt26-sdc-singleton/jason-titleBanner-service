@@ -13,7 +13,7 @@ router.route('/getTitle').get((req, res) => {
 
 //seeding route
 router.route('/addTitle').post((req, res) => {
-  var titleName = dataGeneratorFunction.exampleData(req.body.total);
+  var titleName = dataGeneratorFunction.exampleDataGenerator(req.body.total);
   console.log('------>', titleName);
   titleBanner.saveTile(titleName, (data, err) => {
     if (err) {
