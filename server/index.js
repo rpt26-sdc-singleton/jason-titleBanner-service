@@ -21,7 +21,7 @@ app.use('/api', title);
 
 
 //TODO second table
-//app.use('/api/getTotalEnrolled', enrolled);
+app.use('/api', enrolled);
 
 
 app.listen(port, function() {

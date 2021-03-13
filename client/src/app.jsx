@@ -9,7 +9,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       num: 0,
-      titles: []
+      titles: [],
+      totalEnrolled: 0
     };
     this.onChange = this.onChange.bind(this);
     this.add = this.add.bind(this);
@@ -26,6 +27,16 @@ class App extends React.Component {
       .done(() => {
         console.log('successfully received data from API endpoint');
       });
+
+      $.get('http://localhost:4000/api/getEnrolled', (data) => {
+        console.log('got total Enrolled from server', data);
+        this.setState({
+          totalEnrolled: data
+        });
+      })
+        .done(() => {
+          console.log('successfully received data from API endpoint');
+        });
   }
 
   onChange (e) {

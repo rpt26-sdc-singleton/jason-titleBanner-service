@@ -20,7 +20,7 @@ router.route('/addTitle').post((req, res) => {
       res.status(400).json(err);
     } else { console.log('Titles added successfully'); }
   });
-  res.json('Added title names successfully');
+  res.status(200).json('Added title names successfully');
 });
 
 module.exports = router;
