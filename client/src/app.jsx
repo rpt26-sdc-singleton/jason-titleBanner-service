@@ -9,7 +9,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       num: 0,
-      titles: []
+      titles: [],
+      totalEnrolled: 0
     };
     this.onChange = this.onChange.bind(this);
     this.add = this.add.bind(this);
@@ -17,7 +18,7 @@ class App extends React.Component {
 
   // API Get request
   componentDidMount() {
-    $.get('http://localhost:3000/api/getTitle', (data) => {
+    $.get('http://localhost:4000/api/getTitle', (data) => {
       console.log('got response from server', data);
       this.setState({
         titles: data
@@ -26,6 +27,16 @@ class App extends React.Component {
       .done(() => {
         console.log('successfully received data from API endpoint');
       });
+
+      $.get('http://localhost:4000/api/getEnrolled', (data) => {
+        console.log('got total Enrolled from server', data);
+        this.setState({
+          totalEnrolled: data
+        });
+      })
+        .done(() => {
+          console.log('successfully received data from API endpoint');
+        });
   }
 
   onChange (e) {
@@ -37,7 +48,7 @@ class App extends React.Component {
   add() {
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:3000/api/addTitle',
+      url: 'http://localhost:4000/api/addTitle',
       data: {total: this.state.num},
       success: () => console.log('successfully made a post')
     });

@@ -13,6 +13,12 @@ let exampleDataGenerator = (index) => {
   return titleName;
 };
 
+let exampleEnrolledGenerator = () => {
+  return faker.random.number();
+
+}
+
 module.exports = {
-  exampleDataGenerator
+  exampleDataGenerator,
+  exampleEnrolledGenerator
 };

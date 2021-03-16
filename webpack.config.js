@@ -1,32 +1,25 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+var path = require('path');
 var SRC_DIR = path.join(__dirname, '/client/src');
+var DIST_DIR = path.join(__dirname, '/client/dist');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: `${SRC_DIR}/app.jsx`,
-  devtool: 'inline-source-map',
   output: {
-    filename: 'index.bundle.js',
-    path: path.resolve(__dirname, '/client/dist'),
+    filename: 'bundle.js',
+    path: DIST_DIR
   },
   module: {
-    rules: [
+    loaders: [
       {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: ['babel-loader']
-      },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        test: /\.jsx?/,
+        include: SRC_DIR,
+        loader: 'babel-loader',
+        query: {
+          presets: ['react', 'es2015']
+        }
       }
     ]
-  },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: './public/index.html'
-    })
-  ]
+  }
 };

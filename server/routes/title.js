@@ -13,14 +13,14 @@ router.route('/getTitle').get((req, res) => {
 
 //seeding route
 router.route('/addTitle').post((req, res) => {
-  var titleName = dataGeneratorFunction.exampleData(req.body.total);
+  var titleName = dataGeneratorFunction.exampleDataGenerator(req.body.total);
   console.log('------>', titleName);
   titleBanner.saveTile(titleName, (data, err) => {
     if (err) {
       res.status(400).json(err);
     } else { console.log('Titles added successfully'); }
   });
-  res.json('Added title names successfully');
+  res.status(200).json('Added title names successfully');
 });
 
 module.exports = router;
