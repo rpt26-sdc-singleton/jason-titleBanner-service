@@ -1,0 +1,57 @@
+body {
+  background-color: #333300;
+  color: #FFFFFF;
+ }
+
+ h3 {
+  font-size: 34px;
+  text-align: center;
+ }
+
+ .banner-title {
+  font-family: OpenSans-Bold;
+  font-size: 34px;
+  line-height: 46px;
+  margin-bottom: 24px;
+}
+
+.instructor {
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  color: rgb(255, 255, 255);
+  background-color: rgb(42, 115, 204);
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  max-width: 28px;
+  font-size: 14px;
+  height: 28px;
+  width: 28px;
+  margin-right: 8px;
+}
+
+.offered {
+  margin-left: 1rem!important;
+  margin-bottom: 0!important;
+  font-size: .9rem;
+  text-align: center;
+}
+
+.checked {
+  color: orange;
+  cursor: inherit;
+  margin-bottom: 0.5rem;
+
+}
+
+.white-box {
+  background-color: white;
+  width: 200px;
+  height: 100px;
+  border: 1px;
+  margin-top: 50px;
+}
+
