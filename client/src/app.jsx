@@ -8,7 +8,7 @@ import Titles from './components/titles.jsx';
 import Enrolled from './components/enrolled.jsx';
 
 
-class App extends React.Component {
+class Title extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -116,6 +116,6 @@ class App extends React.Component {
 }
 
 
-ReactDom.render(<App />, document.getElementById('root'));
+ReactDom.render(<Title />, document.getElementById('title'));
 
 
