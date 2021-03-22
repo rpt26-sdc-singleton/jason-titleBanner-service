@@ -10,7 +10,7 @@
   "scripts": {
     "server": "nodemon ./server/index.js",
     "watch": "webpack --watch",
-    "start": "webpack serve --open",
+    "start": "webpack --watch",
     "build": "webpack",
     "test": "node_modules/jest/bin/jest.js server/spec",
     "test-debug": "jest --detectOpenHandles",

@@ -5,6 +5,8 @@ import './style.css';
 import icon from './icons/instructor.png';
 
 import Titles from './components/titles.jsx';
+import Enrolled from './components/enrolled.jsx';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -12,7 +14,7 @@ class App extends React.Component {
     this.state = {
       num: 0,
       titles: [],
-      totalEnrolled: 0
+      totalEnrolled: []
     };
     this.onChange = this.onChange.bind(this);
     this.add = this.add.bind(this);
@@ -37,8 +39,15 @@ class App extends React.Component {
       });
     })
       .done(() => {
-        console.log('successfully received data from API endpoint');
+        console.log('successfully received data from Enrolled API endpoint', this.state.totalEnrolled);
       });
+  }
+
+  componentWillUnmount() {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state, callback)=>{
+      return;
+    };
   }
 
   onChange (e) {
@@ -48,6 +57,7 @@ class App extends React.Component {
   }
 
   add() {
+    console.log('ADD', this.state.totalEnrolled);
     $.ajax({
       type: 'POST',
       url: 'http://localhost:3001/api/addTitle',
@@ -56,17 +66,22 @@ class App extends React.Component {
     });
   }
 
+
   render() {
     return (
       <div>
-        <h4>Enter number of titles to populate</h4>
+        {/* <h4>Enter number of titles to populate</h4>
         <input value = {this.state.num} onChange={this.onChange} />
-        <button onClick={this.add}> Add Titles </button>
-        <p className="offered">Offered By</p>
-        <h3>Stanford</h3>
-        <div className="banner-title">
-          <Titles title={this.state.titles}/>
+        <button onClick={this.add}> Add Titles </button> */}
+        <div>
+          <h1 className="banner-title">
+            <Titles title={this.state.titles}/>
+          </h1>
         </div>
+        <span className="side-bar">
+          <span className="offered">Offered By: </span>
+          <span className="university">Stanford</span>
+        </span>
         <div>
           <span className="fa fa-star checked"></span>
           <span className="fa fa-star checked"></span>
@@ -74,8 +89,10 @@ class App extends React.Component {
           <span className="fa fa-star checked"></span>
           <span className="fa fa-star "></span>
         </div>
-        <div>
+        <div className="instructor-main">
           <img src= {icon} className="instructor"/>
+          <span style= {{color: 'white', fontSize: '20px'}}>Andrew Ng</span>
+          <span id="top-instructor">Top instructor</span>
         </div>
         <div className="white-box">
           <div style= {
@@ -86,6 +103,11 @@ class App extends React.Component {
               padding: '20px'
             }}> Enroll for Free</div>
           <div style= {{color: 'black', fontWeight: 'bold', textAlign: 'center'}}>Starts Mar 29th</div>
+        </div>
+        {/* <div>{this.state.totalEnrolled}</div> */}
+        <div className="enrolled" style = { {marginTop : '30px', color: 'white', fontSize: '30px', display: 'flex'} }>
+          <span> <Enrolled enrolled={this.state.totalEnrolled} /> </span>
+          <span style = { {marginLeft: '10px'} }>already enrolled</span>
         </div>
 
       </div>
