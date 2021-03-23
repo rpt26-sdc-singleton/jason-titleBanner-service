@@ -7,7 +7,9 @@ const mapper = (title) => {
 //Render the received Data from API in a basic Div
 const Titles = ({ title }) => (
   <div>
-    { mapper(title) }
+    <div>
+      { mapper(title) }
+    </div>
   </div>
 );
 
