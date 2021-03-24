@@ -70,9 +70,9 @@ class Title extends React.Component {
   render() {
     return (
       <div>
-        {/* <h4>Enter number of titles to populate</h4>
+        <h4>Enter number of titles to populate</h4>
         <input value = {this.state.num} onChange={this.onChange} />
-        <button onClick={this.add}> Add Titles </button> */}
+        <button onClick={this.add}> Add Titles </button>
         <div>
           <h1 className="banner-title">
             <Titles title={this.state.titles}/>
