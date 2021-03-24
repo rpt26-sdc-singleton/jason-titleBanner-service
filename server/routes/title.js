@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 let Title = require('../../db/title.model');
+const mongoose = require('mongoose');
 
 const dataGeneratorFunction = require('../example.data');
 
@@ -18,7 +19,6 @@ let saveTile = (randomData, cb) => {
         const repo = new Title({
           title
         });
-        console.log('TITLE', repo);
         repo.save()
           .then((title) => cb(title))
           .catch(err => cb(err));
@@ -40,7 +40,10 @@ router.route('/addTitle').post((req, res) => {
   saveTile(titleName, (data, err) => {
     if (err) {
       res.status(400).json(err);
-    } else { console.log('Titles added successfully'); }
+    } else {
+      console.log('Titles added successfully');
+      // mongoose.connection.close();
+    }
   });
   res.status(200).json('Added title names successfully');
 });
