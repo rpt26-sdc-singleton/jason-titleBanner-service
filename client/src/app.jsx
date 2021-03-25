@@ -12,6 +12,7 @@ class Title extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: 1,
       num: 0,
       titles: [],
       totalEnrolled: []
@@ -22,7 +23,15 @@ class Title extends React.Component {
 
   // API Get request
   componentDidMount() {
-    $.get('http://localhost:3001/api/getTitle', (data) => {
+
+    if (document) {
+      var uri = window.location.href.split('/');
+      var id = uri[uri.length - 1] === '' ? 1 : uri[uri.length - 1];
+      console.log('asdsad', id);
+    }
+    console.log(`http://localhost:3001/api/getTitle/${id}`);
+
+    $.get(`http://localhost:3001/api/getTitle/${id}`, (data) => {
       console.log('got response from server', data);
       this.setState({
         titles: data
@@ -32,7 +41,7 @@ class Title extends React.Component {
         console.log('successfully received data from API endpoint');
       });
 
-    $.get('http://localhost:3001/api/getEnrolled', (data) => {
+    $.get(`http://localhost:3001/api/getEnrolled/${id}`, (data) => {
       console.log('got total Enrolled from server', data);
       this.setState({
         totalEnrolled: data

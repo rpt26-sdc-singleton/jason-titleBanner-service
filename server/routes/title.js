@@ -8,8 +8,10 @@ const dataGeneratorFunction = require('../example.data');
 //helper function
 let saveTile = (randomData, cb) => {
   var titleArray = randomData[0].titleName;
+  var idArray = randomData[0].id;
   titleArray.forEach((data, index) => {
     const title = data;
+    const id = String(idArray[index]);
 
     Title.findOne({title: title}, (err, data) => {
       if (err) { console.log(err); }
@@ -17,6 +19,7 @@ let saveTile = (randomData, cb) => {
         cb(`${title} already exists in db`);
       } else {
         const repo = new Title({
+          id,
           title
         });
         repo.save()
@@ -27,9 +30,11 @@ let saveTile = (randomData, cb) => {
   });
 };
 
-router.route('/getTitle').get((req, res) => {
-  Title.find().sort({_id: -1}).limit(1)
-    .then(data => res.status(200).json(data))
+router.route('/getTitle/:id').get((req, res) => {
+  Title.find({id: req.params.id})
+    .then(data => {
+      res.status(200).json(data);
+    })
     .catch(err => res.status(400).json(err));
 });
 
@@ -41,7 +46,7 @@ router.route('/addTitle').post((req, res) => {
     if (err) {
       res.status(400).json(err);
     } else {
-      console.log('Titles added successfully');
+      console.log('Titles added successfully', data.title);
       // mongoose.connection.close();
     }
   });

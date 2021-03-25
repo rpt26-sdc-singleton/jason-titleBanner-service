@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var title = require('./routes/title');
 var enrolled = require('./routes/enrolled');
 const mongoose = require('mongoose');
+const path = require('path');
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(cors());
@@ -29,6 +30,9 @@ app.use('/api', title);
 //TODO second table
 app.use('/api', enrolled);
 
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../public/index.html'));
+});
 
 app.listen(port, function() {
   console.log(`Server started and listening on port ${port}`);
