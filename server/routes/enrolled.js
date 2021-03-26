@@ -36,7 +36,6 @@ router.route('/getEnrolled/:id').get((req, res) => {
   //totalEnrolled.saveEnrolled(exampleEnrolledGenerator());
 
   var enrolled = exampleEnrolledGenerator();
-  console.log(enrolled);
 
   saveEnrolled(enrolled, (data, err) => {
     if (err) {
@@ -48,7 +47,7 @@ router.route('/getEnrolled/:id').get((req, res) => {
   });
 
   Enrolled.find({id: req.params.id})
-    .then(data => res.status(200).json(data))
+    .then(data => res.status(200).json(data[0].enrolled))
     .catch(err => res.status(404).json(err));
 });
 
