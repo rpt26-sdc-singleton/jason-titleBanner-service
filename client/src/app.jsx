@@ -14,8 +14,8 @@ class Title extends React.Component {
     this.state = {
       id: 1,
       num: 0,
-      titles: [],
-      totalEnrolled: []
+      titles: '',
+      totalEnrolled: 0
     };
     this.onChange = this.onChange.bind(this);
     this.add = this.add.bind(this);
@@ -27,12 +27,10 @@ class Title extends React.Component {
     if (document) {
       var uri = window.location.href.split('/');
       var id = uri[uri.length - 1] === '' ? 1 : uri[uri.length - 1];
-      console.log('asdsad', id);
     }
-    console.log(`http://localhost:3001/api/getTitle/${id}`);
 
     $.get(`http://localhost:3001/api/getTitle/${id}`, (data) => {
-      console.log('got response from server', data);
+      console.log('got response from title server', data);
       this.setState({
         titles: data
       });
@@ -66,7 +64,6 @@ class Title extends React.Component {
   }
 
   add() {
-    console.log('ADD', this.state.totalEnrolled);
     $.ajax({
       type: 'POST',
       url: 'http://localhost:3001/api/addTitle',
@@ -114,7 +111,7 @@ class Title extends React.Component {
           <div style= {{color: 'black', fontWeight: 'bold', textAlign: 'center'}}>Starts Mar 29th</div>
         </div>
         {/* <div>{this.state.totalEnrolled}</div> */}
-        <div className="enrolled" style = { {marginTop : '30px', color: 'white', fontSize: '30px', display: 'flex'} }>
+        <div className="enrolled" style = { {marginTop: '30px', color: 'white', fontSize: '30px', display: 'flex'} }>
           <span> <Enrolled enrolled={this.state.totalEnrolled} /> </span>
           <span style = { {marginLeft: '10px'} }>already enrolled</span>
         </div>

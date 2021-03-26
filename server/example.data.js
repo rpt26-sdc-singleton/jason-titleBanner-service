@@ -19,7 +19,6 @@ let exampleDataGenerator = (index) => {
 };
 
 let exampleEnrolledGenerator = () => {
-  console.log(enrolledCounter);
   var diff = titleNameCounter - enrolledCounter;
   var totalEnrolled = [{
     id: [],

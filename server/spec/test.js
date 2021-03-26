@@ -24,7 +24,7 @@ var { exampleEnrolledGenerator } = require('../example.data');
     describe('returns a number for total Enrolled', function() {
       it('Seeding generator return a number for total enrolled in a course', function() {
         var totalEnrolled = exampleEnrolledGenerator();
-        expect(typeof totalEnrolled).to.equal('number');
+        expect(typeof totalEnrolled[0].enrolled[0]).to.equal('number');
       });
     });
   });
