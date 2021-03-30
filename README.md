@@ -41,5 +41,5 @@ npm install
 [![Build Status](https://travis-ci.org/Ingenuity-rpt26/vinay-titleBanner-service.svg?branch=main)](https://travis-ci.org/Ingenuity-rpt26/vinay-titleBanner-service)
 
 
-##license
+## license
 ![NPM](https://img.shields.io/npm/l/express)
