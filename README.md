@@ -37,3 +37,9 @@ npm install -g webpack
 npm install
 ```
 
+## Travis CI
+[![Build Status](https://travis-ci.org/Ingenuity-rpt26/vinay-titleBanner-service.svg?branch=main)](https://travis-ci.org/Ingenuity-rpt26/vinay-titleBanner-service)
+
+
+##license
+![NPM](https://img.shields.io/npm/l/express)
