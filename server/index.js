@@ -8,16 +8,26 @@ var title = require('./routes/title');
 var enrolled = require('./routes/enrolled');
 const mongoose = require('mongoose');
 const path = require('path');
+const dotenv = require('dotenv');
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(cors());
 
 let port = 3001;
 
+dotenv.config();
+
+// mongo environment variables
+const {
+  MONGO_HOSTNAME,
+  MONGO_DB,
+  MONGO_PORT
+} = process.env;
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-mongoose.connect('mongodb://localhost:27017/titleBannerService');
+mongoose.connect(`mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}`);
 const db = mongoose.connection;
 db.once('open', _ => {
   console.log('Mongo Database connected');
