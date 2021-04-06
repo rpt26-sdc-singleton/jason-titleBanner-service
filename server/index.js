@@ -21,7 +21,8 @@ dotenv.config();
 const {
   MONGO_HOSTNAME,
   MONGO_DB,
-  MONGO_PORT
+  MONGO_PORT,
+  PORT
 } = process.env;
 
 app.use(bodyParser.json());
@@ -45,5 +46,5 @@ app.get('/*', (req, res) => {
 });
 
 app.listen(port, function() {
-  console.log(`Server started and listening on port ${port}`);
+  console.log(`Server started and listening on port ${PORT}`);
 });

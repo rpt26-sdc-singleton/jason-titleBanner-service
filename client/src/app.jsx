@@ -29,7 +29,7 @@ class Title extends React.Component {
       var id = uri[uri.length - 1] === '' ? 1 : uri[uri.length - 1];
     }
 
-    $.get(`http://localhost:80/api/getTitle/${id}`, (data) => {
+    $.get(`http://localhost:3001/api/getTitle/${id}`, (data) => {
       console.log('got response from title server', data);
       this.setState({
         titles: data
@@ -39,7 +39,7 @@ class Title extends React.Component {
         console.log('successfully received data from API endpoint');
       });
 
-    $.get(`http://localhost:80/api/getEnrolled/${id}`, (data) => {
+    $.get(`http://localhost:3001/api/getEnrolled/${id}`, (data) => {
       console.log('got total Enrolled from server', data);
       this.setState({
         totalEnrolled: data
@@ -66,7 +66,7 @@ class Title extends React.Component {
   add() {
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:80/api/addTitle',
+      url: 'http://localhost:3001/api/addTitle',
       data: {total: this.state.num},
       success: () => console.log('successfully made a post')
     });
