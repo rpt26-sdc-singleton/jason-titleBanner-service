@@ -1,36 +1,91 @@
-body {
-  background-image: linear-gradient(
-    90deg
-    , rgb(140, 21, 21), rgb(210, 194, 149));
- }
 
- h3 {
-  font-size: 34px;
-  text-align: center;
- }
+.title-service {
+  height: 455px;
+	width: 1792px;
+  position: relative;
+  /* -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent; */
+  font-size: 14px;
+  line-height: 21px;
+  font-family: OpenSans,Arial,sans-serif;
+  /* -webkit-font-smoothing: antialiased; */
+  color: #fff;
+  position: relative;
+  text-align: left;
+  background-image: linear-gradient(90deg, rgb(140, 21, 21), rgb(210, 194, 149));
+}
 
- h1 {
-   margin-left: 0;
-   margin-top: 0;
-   margin-right: 0;
-   padding: 0;
-   max-width: 100%;
-   display: block;
-   font-size: 2em;
-   margin-block-start: 0.67em;
-   margin-block-end: 0.67em;
-   margin-inline-start: 0px;
-   margin-inline-end: 0px;
-   font-weight: bold;
- }
+.title-inner {
+  height: 455px;
+	width: 1440px;
+  position: relative;
+  float: left;
+  margin-top: 40px;
+  margin-left: 60px
+}
 
- .banner-title {
-  font-family: OpenSans-Bold;
-  font-size: 34px;
-  line-height: 46px;
-  margin-bottom: 24px;
-  color: white;
-  margin-top: 0;
+.title-service1 {
+  height: 359px;
+	width: 720px;
+  position: relative;
+  float: left;
+}
+
+ .title-nav {
+	/* Font & Text */
+	font-family: OpenSans, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 21px;
+	text-align: left;
+	color: rgb(255, 255, 255);
+
+	/* Box */
+  height: 21px;
+  width: 600px;
+  /* padding: 20px; */
+
+	/* Positioning */
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+
+	/* Miscellaneous */
+	overflow: visible;
+	cursor: pointer;
+	visibility: visible;
+}
+
+.banner-title {
+	/* Font & Text */
+	font-family: OpenSansBoldOptional, Arial, sans-serif;
+	font-size: 34px;
+	font-weight: 500;
+  padding-top: 10px;
+  padding-bottom: 10px;
+	line-height: 46px;
+	text-decoration: none solid rgb(255, 255, 255);
+	text-align: left;
+	white-space: normal;
+
+	/* Color & Background */
+	background-attachment: scroll;
+	background-color: rgba(0, 0, 0, 0);
+	background-repeat: repeat;
+	color: rgb(255, 255, 255);
+
+	/* Box */
+	height: 46px;
+	width: 300px;
+
+	/* Positioning */
+	position: static;
+
+
+	/* Miscellaneous */
+	overflow: visible;
+	cursor: auto;
+	visibility: visible;
 }
 
 .instructor {
@@ -51,39 +106,101 @@ body {
   margin-right: 8px;
 }
 
+.title-instructorName {
+  font-family: OpenSans, Arial, sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	letter-spacing: normal;
+	line-height: 19px;
+	text-decoration: none solid rgb(255, 255, 255);
+}
+
 .offered {
   margin-bottom: 0;
   font-size: .9rem;
   margin-right: 5px;
   color: white;
+  font-size: 14px;
+  font-family: OpenSans, Arial, sans-serif;
   /* text-align: center; */
 }
 
 .university {
   font-size: 20px;
   /* text-align: center; */
-  color: white
+  color: white;
+  padding-top: 10px;
 }
 
 .side-bar {
-  margin-left: 435px;
-  text-align: center;
+  height: 359px;
+	width: 720px;
+  position: relative;
+  float: left;
+  /* margin-left: 435px;
+  text-align: center; */
+}
+
+.title-star {
+  width: 300px;
+  height: 29px;
+}
+
+.title-rating, .title-num {
+  padding-right: 5px;
+  padding-left: 5px;
 }
 
 .checked {
   color: orange;
   cursor: inherit;
-  margin-bottom: 0.5rem;
-  margin-left: 0;
-
 }
 
 .white-box {
   background-color: white;
-  width: 200px;
-  height: 100px;
+  width: 179px;
+  height: 81px;
   border: 1px;
   margin-top: 50px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.title-charge {
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.title-date {
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  font-size: 12px;
+}
+
+.title-aid {
+  font-family: OpenSans, Arial, sans-serif;
+  width: 150px;
+  height: 18px;
+  position: relative;
+  display: inline-block;
+  padding-top: 20px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.enrolled {
+  margin-top: 30px;
+  color: white;
+  font-size: 30px;
+  display: flex
 }
 
 .instructor-main {
@@ -91,6 +208,8 @@ body {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+  padding-top: 20px;
+  /* padding-bottom: 10px; */
 }
 
 #top-instructor {
