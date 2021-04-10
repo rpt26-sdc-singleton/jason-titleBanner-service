@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import $ from 'jquery';
+import axios from 'axios';
 import './style.css';
-import icon from './icons/instructor.png';
 
 import Titles from './components/titles.jsx';
 import Enrolled from './components/enrolled.jsx';
@@ -15,7 +15,10 @@ class Title extends React.Component {
       id: 1,
       num: 0,
       titles: '',
-      totalEnrolled: 0
+      totalEnrolled: 0,
+      instructor: '',
+      offeredBy: '',
+      img: ''
     };
     this.onChange = this.onChange.bind(this);
     this.add = this.add.bind(this);
@@ -29,25 +32,51 @@ class Title extends React.Component {
       var id = uri[uri.length - 1] === '' ? 1 : uri[uri.length - 1];
     }
 
-    $.get(`http://localhost:3001/api/getTitle/${id}`, (data) => {
-      console.log('got response from title server', data);
-      this.setState({
-        titles: data
-      });
-    })
-      .done(() => {
-        console.log('successfully received data from API endpoint');
-      });
+    axios.get(`http://localhost:3001/api/getTitle/${id}`)
+      .then(response => {
+        this.setState({
+          titles: response.data
+        });
+      })
+      .catch(err => console.log('Issue with getting course Title', err));
 
-    $.get(`http://localhost:3001/api/getEnrolled/${id}`, (data) => {
-      console.log('got total Enrolled from server', data);
-      this.setState({
-        totalEnrolled: data
-      });
-    })
-      .done(() => {
-        console.log('successfully received data from Enrolled API endpoint', this.state.totalEnrolled);
-      });
+
+    axios.get(`http://localhost:3001/api/getEnrolled/${id}`)
+      .then(response => {
+        this.setState({
+          totalEnrolled: response.data
+        });
+      })
+      .catch(err => console.log('Error while getting total Enrolled', err));
+
+
+    //get instructors name
+
+    axios.get(`http://54.176.19.199:3003/api/instructors/${id}`)
+      .then(response => {
+        this.setState({
+          instructor: `${response.data[0].firstName} ${response.data[0].lastName}`
+        });
+      })
+      .catch(err => console.log('Cannot get instructors', err));
+
+
+    axios.get(`http://54.176.19.199:3003/api/offeredBy/${id}`)
+      .then(response => {
+        this.setState({
+          offeredBy: response.data[0].offeredByName
+        });
+      })
+      .catch(err => console.log('Cannot get offered by', err));
+
+    axios.get(`http://54.176.19.199:3006/api/image/${id}/primaryInstructor `)
+      .then(response => {
+        this.setState({
+          img: response.data.primaryInstructor
+        });
+      })
+      .catch(err => console.log('Could not get images', err));
+
   }
 
   componentWillUnmount() {
@@ -63,6 +92,8 @@ class Title extends React.Component {
     });
   }
 
+
+  //TODO: Can remove as used only for seeding
   add() {
     $.ajax({
       type: 'POST',
@@ -75,47 +106,49 @@ class Title extends React.Component {
 
   render() {
     return (
-      <div>
-        <h4>Enter number of titles to populate</h4>
-        <input value = {this.state.num} onChange={this.onChange} />
-        <button onClick={this.add}> Add Titles </button>
-        <div>
-          <h1 className="banner-title">
-            <Titles title={this.state.titles}/>
-          </h1>
+      <div className="title-service">
+        <div className="title-inner">
+          <div className="title-service1">
+            <div className="title-nav">
+              Browse {'>'}   Data Science {'>'}   Machine Learning
+            </div>
+            <div className="banner-title">
+              <Titles title={this.state.titles}/>
+            </div>
+            <div className="title-star">
+              <span className="fa fa-star checked"></span>
+              <span className="fa fa-star checked"></span>
+              <span className="fa fa-star checked"></span>
+              <span className="fa fa-star checked"></span>
+              <span className="fa fa-star "></span>
+              <span className="checked title-num">4.9</span>
+              <span className="title-rating">157,748 rating</span>
+            </div>
+            <div className="instructor-main">
+              <img src= {this.state.img} className="instructor"/>
+              <span className = "title-instructorName">
+                {this.state.instructor}
+              </span>
+              <span id="top-instructor">Top instructor</span>
+            </div>
+            <div className="white-box">
+              <div className="title-charge"> Enroll for Free</div>
+              <div className="title-date">Starts Apr 29th</div>
+            </div>
+            <div className="title-aid">Financial aid available</div>
+            {/* <div>{this.state.totalEnrolled}</div> */}
+            <div className="enrolled">
+              <span> <Enrolled enrolled={this.state.totalEnrolled} /> </span>
+              <span style = { {marginLeft: '10px'} }>already enrolled</span>
+            </div>
+          </div>
+          <div className="side-bar">
+            <span>
+              <p className="offered">Offered By </p>
+              <div className="university">{this.state.offeredBy}</div>
+            </span>
+          </div>
         </div>
-        <span className="side-bar">
-          <span className="offered">Offered By: </span>
-          <span className="university">Stanford</span>
-        </span>
-        <div>
-          <span className="fa fa-star checked"></span>
-          <span className="fa fa-star checked"></span>
-          <span className="fa fa-star checked"></span>
-          <span className="fa fa-star checked"></span>
-          <span className="fa fa-star "></span>
-        </div>
-        <div className="instructor-main">
-          <img src= {icon} className="instructor"/>
-          <span style= {{color: 'white', fontSize: '20px'}}>Andrew Ng</span>
-          <span id="top-instructor">Top instructor</span>
-        </div>
-        <div className="white-box">
-          <div style= {
-            {
-              color: 'black',
-              fontWeight: 'bold',
-              textAlign: 'center',
-              padding: '20px'
-            }}> Enroll for Free</div>
-          <div style= {{color: 'black', fontWeight: 'bold', textAlign: 'center'}}>Starts Mar 29th</div>
-        </div>
-        {/* <div>{this.state.totalEnrolled}</div> */}
-        <div className="enrolled" style = { {marginTop: '30px', color: 'white', fontSize: '30px', display: 'flex'} }>
-          <span> <Enrolled enrolled={this.state.totalEnrolled} /> </span>
-          <span style = { {marginLeft: '10px'} }>already enrolled</span>
-        </div>
-
       </div>
     );
   }
