@@ -7,6 +7,7 @@ import './style.css';
 import Titles from './components/titles.jsx';
 import Enrolled from './components/enrolled.jsx';
 
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
 class Title extends React.Component {
   constructor(props) {
@@ -18,7 +19,9 @@ class Title extends React.Component {
       totalEnrolled: 0,
       instructor: '',
       offeredBy: '',
-      img: ''
+      img: '',
+      month: '',
+      date: 0
     };
     this.onChange = this.onChange.bind(this);
     this.add = this.add.bind(this);
@@ -44,7 +47,9 @@ class Title extends React.Component {
     axios.get(`http://localhost:3001/api/getEnrolled/${id}`)
       .then(response => {
         this.setState({
-          totalEnrolled: response.data
+          totalEnrolled: response.data,
+          month: months[Math.floor(Math.random() * months.length)],
+          date: Math.floor(Math.random() * 30)
         });
       })
       .catch(err => console.log('Error while getting total Enrolled', err));
@@ -133,7 +138,7 @@ class Title extends React.Component {
             </div>
             <div className="white-box">
               <div className="title-charge"> Enroll for Free</div>
-              <div className="title-date">Starts Apr 29th</div>
+              <div className="title-date">Starts {this.state.month} {this.state.date}</div>
             </div>
             <div className="title-aid">Financial aid available</div>
             {/* <div>{this.state.totalEnrolled}</div> */}
