@@ -77,6 +77,7 @@
 	/* Box */
 	height: 46px;
 	width: 300px;
+  white-space: nowrap;
 
 	/* Positioning */
 	position: static;
