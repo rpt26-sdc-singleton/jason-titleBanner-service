@@ -198,9 +198,10 @@
 }
 
 .enrolled {
+  font-family: OpenSans, Arial, sans-serif;
   margin-top: 30px;
   color: white;
-  font-size: 30px;
+  font-size: 16px;
   display: flex
 }
 
