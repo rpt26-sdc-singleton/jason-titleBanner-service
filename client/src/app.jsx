@@ -112,11 +112,6 @@ class Title extends React.Component {
   render() {
     return (
       <div className="title-service">
-        <div>
-          <h4>Enter number of titles to populate</h4>
-          <input value = {this.state.num} onChange={this.onChange} />
-          <button onClick={this.add}> Add Titles </button>
-        </div>
         <div className="title-inner">
           <div className="title-service1">
             <div className="title-nav">
