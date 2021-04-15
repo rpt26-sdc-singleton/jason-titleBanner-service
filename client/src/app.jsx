@@ -169,7 +169,7 @@ class Title extends React.Component {
             </div>
             <div className="title-star">
               <Stars stars={this.stars} rating={this.state.totalStars} />
-              <span className="checked title-num">{this.state.totalStars}</span>
+              <span className="title-num">{this.state.totalStars}</span>
               <span className="title-rating">{this.state.totalReviews} ratings</span>
             </div>
             <div className="instructor-main">
