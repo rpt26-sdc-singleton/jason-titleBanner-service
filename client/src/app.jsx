@@ -3,12 +3,14 @@ import ReactDom from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
 import './style.css';
+import colors from './icons/backgroundImages';
 
 import Titles from './components/titles.jsx';
 import Enrolled from './components/enrolled.jsx';
 import Stars from './components/totalStars.jsx';
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+
 
 class Title extends React.Component {
   constructor(props) {
@@ -25,6 +27,7 @@ class Title extends React.Component {
       date: 0,
       totalReviews: 0,
       totalStars: 0,
+      color: '',
     };
     this.onChange = this.onChange.bind(this);
     this.add = this.add.bind(this);
@@ -53,7 +56,8 @@ class Title extends React.Component {
         this.setState({
           totalEnrolled: response.data,
           month: months[Math.floor(Math.random() * months.length)],
-          date: Math.floor(Math.random() * 30)
+          date: Math.floor(Math.random() * 30),
+          color: colors[Math.floor(Math.random() * colors.length)],
         });
       })
       .catch(err => console.log('Error while getting total Enrolled', err));
@@ -153,12 +157,12 @@ class Title extends React.Component {
     }
 
     return starHTML;
-  };
+  }
 
 
   render() {
     return (
-      <div className="title-service">
+      <div className="title-service" style={ {backgroundImage: `linear-gradient(${this.state.color})`} }>
         <div className="title-inner">
           <div className="title-service1">
             <div className="title-nav">
@@ -177,7 +181,9 @@ class Title extends React.Component {
               <span className = "title-instructorName">
                 {this.state.instructor}
               </span>
-              <span id="top-instructor">Top instructor</span>
+              {this.state.totalEnrolled > 50000 &&
+                <span id="top-instructor">Top instructor</span>
+              }
             </div>
             <div className="white-box">
               <div className="title-charge"> Enroll for Free</div>
