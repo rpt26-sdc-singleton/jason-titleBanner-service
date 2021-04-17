@@ -6,7 +6,7 @@ import ReactDom from 'react-dom';
 
 
 const Stars = ( {stars, rating} ) => (
-  <span dangerouslySetInnerHTML={{__html: stars(rating)}}></span>
+  <span className="title-overall-star" dangerouslySetInnerHTML={{__html: stars(rating)}}></span>
 );
 
 export default Stars;
