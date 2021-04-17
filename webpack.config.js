@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './client/src/app.jsx',
   devtool: 'inline-source-map',
   module: {
