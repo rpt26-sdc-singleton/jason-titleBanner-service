@@ -2,7 +2,7 @@
 
 exports[`matches snapshot 1`] = `
 <div
-  data-testid="title"
+  data-testid="title-test"
 >
   <div>
     snapshot

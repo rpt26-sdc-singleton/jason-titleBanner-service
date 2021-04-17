@@ -6,7 +6,7 @@ import ReactDom from 'react-dom';
 // };
 //Render the received Data from API in a basic Div
 const Titles = ({ title }) => (
-  <div data-testid="title">
+  <div data-testid="title-test">
     <div>
       { title }
     </div>

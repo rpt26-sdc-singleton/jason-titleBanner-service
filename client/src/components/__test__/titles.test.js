@@ -17,13 +17,13 @@ it('renders without crashing', () => {
 
 it('render titles correctly', () => {
   const {getByTestId} = render(<Titles title= {'hi'}></Titles>);
-  expect(getByTestId('title')).toHaveTextContent('hi');
+  expect(getByTestId('title-test')).toHaveTextContent('hi');
 });
 
 //test DOM cleanup
 it('render titles correctly', () => {
   const {getByTestId} = render(<Titles title= {'bye'}></Titles>);
-  expect(getByTestId('title')).toHaveTextContent('bye');
+  expect(getByTestId('title-test')).toHaveTextContent('bye');
 });
 
 //test snapshot
