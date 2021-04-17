@@ -168,7 +168,7 @@ class Title extends React.Component {
         <div className="title-inner">
           <div className="title-service1">
             <div className="title-nav">
-              Browse {'>'}   Data Science {'>'}   Machine Learning
+              Browse {'>'}   Department {'>'}   {this.state.titles}
             </div>
             <div className="banner-title">
               <Titles title={this.state.titles}/>
