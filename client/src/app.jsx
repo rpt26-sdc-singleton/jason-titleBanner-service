@@ -43,63 +43,63 @@ class Title extends React.Component {
       var id = uri[uri.length - 1] === '' ? 1 : uri[uri.length - 1];
     }
 
-    axios.get(`http://3.140.219.139/api/getTitle/${id}`)
-      .then(response => {
-        this.setState({
-          titles: response.data
-        });
-      })
-      .catch(err => console.log('Issue with getting course Title', err));
+    // axios.get(`http://3.140.219.139/api/getTitle/${id}`)
+    //   .then(response => {
+    //     this.setState({
+    //       titles: response.data
+    //     });
+    //   })
+    //   .catch(err => console.log('Issue with getting course Title', err));
 
 
-    axios.get(`http://3.140.219.139/api/getEnrolled/${id}`)
-      .then(response => {
-        this.setState({
-          totalEnrolled: response.data,
-          month: months[Math.floor(Math.random() * months.length)],
-          date: Math.floor(Math.random() * 30),
-          color: colors[Math.floor(Math.random() * colors.length)],
-        });
-      })
-      .catch(err => console.log('Error while getting total Enrolled', err));
+    // axios.get(`http://3.140.219.139/api/getEnrolled/${id}`)
+    //   .then(response => {
+    //     this.setState({
+    //       totalEnrolled: response.data,
+    //       month: months[Math.floor(Math.random() * months.length)],
+    //       date: Math.floor(Math.random() * 30),
+    //       color: colors[Math.floor(Math.random() * colors.length)],
+    //     });
+    //   })
+    //   .catch(err => console.log('Error while getting total Enrolled', err));
 
 
-    //get instructors name
+    // //get instructors name
 
-    axios.get(`http://54.176.19.199:3003/api/instructors/${id}`)
-      .then(response => {
-        this.setState({
-          instructor: `${response.data[0].firstName} ${response.data[0].lastName}`
-        });
-      })
-      .catch(err => console.log('Cannot get instructors', err));
-
-
-    axios.get(`http://54.176.19.199:3003/api/offeredBy/${id}`)
-      .then(response => {
-        this.setState({
-          offeredBy: response.data[0].offeredByName
-        });
-      })
-      .catch(err => console.log('Cannot get offered by', err));
-
-    axios.get(`http://54.176.19.199:3006/api/image/${id}/primaryInstructor `)
-      .then(response => {
-        this.setState({
-          img: response.data.primaryInstructor
-        });
-      })
-      .catch(err => console.log('Could not get images', err));
+    // axios.get(`http://54.176.19.199:3003/api/instructors/${id}`)
+    //   .then(response => {
+    //     this.setState({
+    //       instructor: `${response.data[0].firstName} ${response.data[0].lastName}`
+    //     });
+    //   })
+    //   .catch(err => console.log('Cannot get instructors', err));
 
 
-    axios.get(`http://3.139.47.159/api/totalReviewScore/${id}`)
-      .then(response => {
-        this.setState({
-          totalReviews: response.data.reviewCount,
-          totalStars: response.data.totalStarScore
-        });
-      })
-      .catch(err => console.log('Could not get reviews', err));
+    // axios.get(`http://54.176.19.199:3003/api/offeredBy/${id}`)
+    //   .then(response => {
+    //     this.setState({
+    //       offeredBy: response.data[0].offeredByName
+    //     });
+    //   })
+    //   .catch(err => console.log('Cannot get offered by', err));
+
+    // axios.get(`http://54.176.19.199:3006/api/image/${id}/primaryInstructor `)
+    //   .then(response => {
+    //     this.setState({
+    //       img: response.data.primaryInstructor
+    //     });
+    //   })
+    //   .catch(err => console.log('Could not get images', err));
+
+
+    // axios.get(`http://3.139.47.159/api/totalReviewScore/${id}`)
+    //   .then(response => {
+    //     this.setState({
+    //       totalReviews: response.data.reviewCount,
+    //       totalStars: response.data.totalStarScore
+    //     });
+    //   })
+    //   .catch(err => console.log('Could not get reviews', err));
   }
 
 
