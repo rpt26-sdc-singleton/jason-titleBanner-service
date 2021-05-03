@@ -43,25 +43,25 @@ class Title extends React.Component {
       var id = uri[uri.length - 1] === '' ? 1 : uri[uri.length - 1];
     }
 
-    // axios.get(`http://3.140.219.139/api/getTitle/${id}`)
-    //   .then(response => {
-    //     this.setState({
-    //       titles: response.data
-    //     });
-    //   })
-    //   .catch(err => console.log('Issue with getting course Title', err));
+    axios.get(`http://localhost:3001/api/getTitle/${id}`)
+      .then(response => {
+        this.setState({
+          titles: response.data
+        });
+      })
+      .catch(err => console.log('Issue with getting course Title', err));
 
 
-    // axios.get(`http://3.140.219.139/api/getEnrolled/${id}`)
-    //   .then(response => {
-    //     this.setState({
-    //       totalEnrolled: response.data,
-    //       month: months[Math.floor(Math.random() * months.length)],
-    //       date: Math.floor(Math.random() * 30),
-    //       color: colors[Math.floor(Math.random() * colors.length)],
-    //     });
-    //   })
-    //   .catch(err => console.log('Error while getting total Enrolled', err));
+    axios.get(`http://localhost:3001/api/getEnrolled/${id}`)
+      .then(response => {
+        this.setState({
+          totalEnrolled: response.data,
+          month: months[Math.floor(Math.random() * months.length)],
+          date: Math.floor(Math.random() * 30),
+          color: colors[Math.floor(Math.random() * colors.length)],
+        });
+      })
+      .catch(err => console.log('Error while getting total Enrolled', err));
 
 
     // //get instructors name
@@ -105,12 +105,12 @@ class Title extends React.Component {
 
   componentWillUnmount() {
     // fix Warning: Can't perform a React state update on an unmounted component
-    this.setState = (state, callback)=>{
+    this.setState = (state, callback) => {
       return;
     };
   }
 
-  onChange (e) {
+  onChange(e) {
     this.setState({
       num: Number(e.target.value)
     });
@@ -121,8 +121,8 @@ class Title extends React.Component {
   add() {
     $.ajax({
       type: 'POST',
-      url: 'http://3.140.219.139/api/addTitle',
-      data: {total: this.state.num},
+      url: 'http://localhost:3001/api/addTitle',
+      data: { total: this.state.num },
       success: () => console.log('successfully made a post')
     });
   }
@@ -165,6 +165,7 @@ class Title extends React.Component {
   render() {
     return (
       <div className="title-service" style={ {backgroundImage: `linear-gradient(${this.state.color})`} }>
+
         <div className="title-inner">
           <div className="title-service1">
             <div className="title-nav">
@@ -205,6 +206,12 @@ class Title extends React.Component {
           </div>
         </div>
       </div>
+
+      // <div>
+      //   <h4>Enter number of titles to populate</h4>
+      //   <input value={this.state.num} onChange={this.onChange} />
+      //   <button onClick={this.add}> Add Titles </button>
+      // </div>
     );
   }
 }

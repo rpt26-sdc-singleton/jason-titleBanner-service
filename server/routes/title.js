@@ -13,6 +13,7 @@ let saveTile = (randomData, cb) => {
     const title = data;
     const id = String(idArray[index]);
 
+    //take care of duplicates
     Title.findOne({title: title}, (err, data) => {
       if (err) { console.log(err); }
       if (data) {
