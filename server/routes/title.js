@@ -31,15 +31,6 @@ let saveTile = (randomData, cb) => {
   });
 };
 
-//Retrieve/Read operation
-router.route('/getTitle/:id').get((req, res) => {
-  Title.find({ id: req.params.id })
-    .then(data => {
-      res.status(200).json(data[0].title);
-    })
-    .catch(err => res.status(400).json(err));
-});
-
 
 //seeding route - Create operation
 router.route('/addTitle').post((req, res) => {
@@ -55,16 +46,30 @@ router.route('/addTitle').post((req, res) => {
   res.status(200).json('Added title names successfully');
 });
 
+
+//Retrieve/Read operation
+router.route('/getTitle/:id').get((req, res) => {
+  Title.find({ id: req.params.id })
+    .then(data => {
+      res.status(200).json(data[0].title);
+    })
+    .catch(err => res.status(400).json(err));
+});
+
+
+
 //Update operation - given an id and new title as input through the req object
 router.route('/updateTitle/:id').put((req, res) => {
   //update the one item
-  User.updateOne({ age: { $gte: 5 } },
-    { title: req.params.title }, function (err, docs) {
+  Title.updateOne({ id: req.params.id },
+    { title: req.body.title }, function (err, docs) {
       if (err) {
+        res.status(400).json(err);
         console.log(err);
       }
       else {
-        console.log('Updated Docs : ', docs);
+        res.status(200).json(data[0].title);
+        console.log('Updated Doc : ', docs);
       }
     });
 });
@@ -73,13 +78,14 @@ router.route('/updateTitle/:id').put((req, res) => {
 //Delete operation - given an id as input through the req object
 router.route('deleteTitle/:id').delete((req, res) => {
   //find the item and delete
-  Title.remove({ id: req.params.id },
+  Title.deleteOne({ id: req.params.id },
     function (err, data) {
       if (err) {
+        res.status(400).json(err);
         console.log(err);
       }
       else {
-        res.send(data);
+        res.json(`Title and id for id ${req.params.id} removed from database...`);
         console.log('Data Deleted!');
       }
     });

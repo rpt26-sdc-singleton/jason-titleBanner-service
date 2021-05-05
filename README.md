@@ -74,4 +74,21 @@ CRUD API - Enrolled
 
 Create:
   Type: POST
-  Endpoint:
+  Endpoint: '/postEnrolled'
+  Expectation: post a new item to the enrolleds table in the TitleService db (assuming the id has not already been used)
+
+
+Read:
+  Type: GET
+  Endpoint: '/retrieveEnrolled/:id'
+  Expectation: return the enrolled number for the specific id from the enrolleds table in TitleService db
+
+  Update:
+    Type: PUT
+    Endpoint: 'updateEnrolled/:id'
+    Expectation: update the enrolled number for the specific id from the enrolleds table in TitleService db
+
+  Delete:
+    Type: DELETE
+    Endpoint: 'deleteEnrolled/:id'
+    Expectation: delete the enrolled number for the specific id passed in from the enrolleds table in the TitleService db
