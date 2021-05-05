@@ -62,29 +62,34 @@ router.route('/getTitle/:id').get((req, res) => {
 router.route('/updateTitle/:id').put((req, res) => {
   //update the one item
   Title.updateOne({ id: req.params.id },
-    { title: req.body.title }, function (err, docs) {
-      if (err) {
-        res.status(400).json(err);
-        console.log(err);
-      }
-      else {
-        res.status(200).json(data[0].title);
-        console.log('Updated Doc : ', docs);
-      }
-    });
+    { title: req.body.title })
+    .then(data => {
+      res.status(200).json(data[0].title);
+    })
+    .catch(err => res.status(400).json(err));
+
+  // , function (err, data) {
+  //   if (err) {
+  //     res.status(400).json(err);
+  //     console.log(err);
+  //   }
+  //   else {
+  //     res.status(200).json(data[0].title);
+  //     console.log('Updated Doc : ', data);
+  //   }
+  // }
 });
 
 
 //Delete operation - given an id as input through the req object
-router.route('deleteTitle/:id').delete((req, res) => {
+router.route('/deleteTitle/:id').delete((req, res) => {
   //find the item and delete
   Title.deleteOne({ id: req.params.id },
     function (err, data) {
       if (err) {
         res.status(400).json(err);
         console.log(err);
-      }
-      else {
+      } else {
         res.json(`Title and id for id ${req.params.id} removed from database...`);
         console.log('Data Deleted!');
       }

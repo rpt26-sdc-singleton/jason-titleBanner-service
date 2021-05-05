@@ -58,7 +58,6 @@ router.route('/getEnrolled/:id').get((req, res) => {
 //Create operation - given an enrolled num and an id, create a new entry
 router.route('/postEnrolled').post((req, res) => {
   //save a new document to the db
-
   const id = req.body.id;
   const enrolled = req.body.enrolled;
   //take care of duplicates
@@ -91,14 +90,27 @@ router.route('/retrieveEnrolled/:id').get((req, res) => {
 
 //Update Operation - given a specific id
 router.route('/updateEnrolled/:id').put((req, res) => {
-
+  Enrolled.updateOne({ id: req.params.id },
+    { enrolled: req.body.enrolled })
+    .then(data => {
+      res.status(200).json(data[0].enrolled);
+    })
+    .catch(err => res.status(400).json(err));
 });
 
 
-
 //Delete Operation - given a specific id
-router.route('/updateEnrolled/:id').delete((req, res) => {
-
+router.route('/deleteEnrolled/:id').delete((req, res) => {
+  Enrolled.deleteOne({ id: req.params.id },
+    function (err, data) {
+      if (err) {
+        res.status(400).json(err);
+        console.log(err);
+      } else {
+        res.json(`Enrolled and id for id ${req.params.id} removed from database...`);
+        console.log('Data Deleted!');
+      }
+    });
 });
 
 
