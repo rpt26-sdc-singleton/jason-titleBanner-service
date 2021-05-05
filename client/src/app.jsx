@@ -164,7 +164,13 @@ class Title extends React.Component {
 
   render() {
     return (
-      <div className="title-service" style={ {backgroundImage: `linear-gradient(${this.state.color})`} }>
+      <div className="title-service" style={{ backgroundImage: `linear-gradient(${this.state.color})` }}>
+
+        {/* <div>
+          <h4>Enter number of titles to populate</h4>
+          <input value={this.state.num} onChange={this.onChange} />
+          <button onClick={this.add}> Add Titles </button>
+        </div> */}
 
         <div className="title-inner">
           <div className="title-service1">
@@ -172,7 +178,7 @@ class Title extends React.Component {
               Browse {'>'}   Department {'>'}   {this.state.titles}
             </div>
             <div className="banner-title">
-              <Titles title={this.state.titles}/>
+              <Titles title={this.state.titles} />
             </div>
             <div className="title-star">
               <Stars stars={this.stars} rating={this.state.totalStars} />
@@ -180,8 +186,8 @@ class Title extends React.Component {
               <span className="title-rating">{this.state.totalReviews} ratings</span>
             </div>
             <div className="instructor-main">
-              <img src= {this.state.img} alt="instructor" className="instructor"/>
-              <span className = "title-instructorName">
+              <img src={this.state.img} alt="instructor" className="instructor" />
+              <span className="title-instructorName">
                 {this.state.instructor}
               </span>
               {this.state.totalEnrolled > 50000 &&
@@ -195,7 +201,7 @@ class Title extends React.Component {
             <div className="title-aid">Financial aid available</div>
             <div className="enrolled">
               <span> <Enrolled enrolled={this.state.totalEnrolled} /> </span>
-              <span style = { {marginLeft: '10px'} }>already enrolled</span>
+              <span style={{ marginLeft: '10px' }}>already enrolled</span>
             </div>
           </div>
           <div className="side-bar">
@@ -207,11 +213,7 @@ class Title extends React.Component {
         </div>
       </div>
 
-      // <div>
-      //   <h4>Enter number of titles to populate</h4>
-      //   <input value={this.state.num} onChange={this.onChange} />
-      //   <button onClick={this.add}> Add Titles </button>
-      // </div>
+
     );
   }
 }

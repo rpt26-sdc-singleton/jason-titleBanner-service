@@ -14,7 +14,7 @@ let saveTile = (randomData, cb) => {
     const id = String(idArray[index]);
 
     //take care of duplicates
-    Title.findOne({title: title}, (err, data) => {
+    Title.findOne({ title: title }, (err, data) => {
       if (err) { console.log(err); }
       if (data) {
         cb(`${title} already exists in db`);
@@ -31,8 +31,9 @@ let saveTile = (randomData, cb) => {
   });
 };
 
+//Retrieve/Read operation
 router.route('/getTitle/:id').get((req, res) => {
-  Title.find({id: req.params.id})
+  Title.find({ id: req.params.id })
     .then(data => {
       res.status(200).json(data[0].title);
     })
@@ -40,7 +41,7 @@ router.route('/getTitle/:id').get((req, res) => {
 });
 
 
-//seeding route
+//seeding route - Create operation
 router.route('/addTitle').post((req, res) => {
   var titleName = dataGeneratorFunction.exampleDataGenerator(req.body.total);
   saveTile(titleName, (data, err) => {
@@ -54,7 +55,34 @@ router.route('/addTitle').post((req, res) => {
   res.status(200).json('Added title names successfully');
 });
 
+//Update operation - given an id and new title as input through the req object
+router.route('/updateTitle/:id').put((req, res) => {
+  //update the one item
+  User.updateOne({ age: { $gte: 5 } },
+    { title: req.params.title }, function (err, docs) {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        console.log('Updated Docs : ', docs);
+      }
+    });
+});
 
 
+//Delete operation - given an id as input through the req object
+router.route('deleteTitle/:id').delete((req, res) => {
+  //find the item and delete
+  Title.remove({ id: req.params.id },
+    function (err, data) {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        res.send(data);
+        console.log('Data Deleted!');
+      }
+    });
+});
 
 module.exports = router;
