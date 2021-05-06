@@ -92,10 +92,17 @@ router.route('/retrieveEnrolled/:id').get((req, res) => {
 router.route('/updateEnrolled/:id').put((req, res) => {
   Enrolled.updateOne({ id: req.params.id },
     { enrolled: req.body.enrolled })
-    .then(data => {
-      res.status(200).json(data[0].enrolled);
+    .then(() => {
+      Enrolled.find({ id: req.params.id })
+        .then(data => {
+          res.status(200).json(data[0].enrolled);
+          console.log('DATA', data);
+        });
     })
-    .catch(err => res.status(400).json(err));
+    .catch(err => {
+      res.status(400).send(err);
+      console.log('item not found');
+    });
 });
 
 

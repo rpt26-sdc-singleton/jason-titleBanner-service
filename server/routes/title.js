@@ -77,20 +77,6 @@ router.route('/updateTitle/:id').put((req, res) => {
       res.status(400).send(err);
       console.log('item not found');
     });
-
-
-  // , function (err, data) {
-  //   if (err) {
-  //     res.status(400).json(err);
-  //     console.log(err);
-  //   } else {
-  //     res.status(200).json(data[0]);
-  //     console.log('Updated Doc : ', data);
-  //     res.end();
-  //   }
-  // });
-
-
 });
 
 
