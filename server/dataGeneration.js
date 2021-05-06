@@ -34,3 +34,7 @@ let dataGenerator = (inputNum) => {
 module.exports = {
   dataGenerator
 }
+
+
+//tested dataGeneration to see if it worked
+// dataGenerator(5);
