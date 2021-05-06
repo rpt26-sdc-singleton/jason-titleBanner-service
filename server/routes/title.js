@@ -53,7 +53,10 @@ router.route('/getTitle/:id').get((req, res) => {
     .then(data => {
       res.status(200).json(data[0].title);
     })
-    .catch(err => res.status(400).json(err));
+    .catch(err => {
+      res.status(400).send(err);
+      console.log('item not found');
+    });
 });
 
 
@@ -63,21 +66,31 @@ router.route('/updateTitle/:id').put((req, res) => {
   //update the one item
   Title.updateOne({ id: req.params.id },
     { title: req.body.title })
-    .then(data => {
-      res.status(200).json(data[0].title);
+    .then(() => {
+      Title.find({ id: req.params.id })
+        .then(data => {
+          res.status(200).json(data[0].title);
+          console.log('DATA', data);
+        });
     })
-    .catch(err => res.status(400).json(err));
+    .catch(err => {
+      res.status(400).send(err);
+      console.log('item not found');
+    });
+
 
   // , function (err, data) {
   //   if (err) {
   //     res.status(400).json(err);
   //     console.log(err);
-  //   }
-  //   else {
-  //     res.status(200).json(data[0].title);
+  //   } else {
+  //     res.status(200).json(data[0]);
   //     console.log('Updated Doc : ', data);
+  //     res.end();
   //   }
-  // }
+  // });
+
+
 });
 
 
@@ -90,7 +103,7 @@ router.route('/deleteTitle/:id').delete((req, res) => {
         res.status(400).json(err);
         console.log(err);
       } else {
-        res.json(`Title and id for id ${req.params.id} removed from database...`);
+        res.status(200).json(`Title and id for id ${req.params.id} removed from database...`);
         console.log('Data Deleted!');
       }
     });

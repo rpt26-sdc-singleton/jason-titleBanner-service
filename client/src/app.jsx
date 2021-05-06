@@ -64,6 +64,7 @@ class Title extends React.Component {
       .catch(err => console.log('Error while getting total Enrolled', err));
 
 
+    //** TODO: Will need to uncomment the following and change the endpoint for the GET request to retrieve the data correctly later */
     // //get instructors name
 
     // axios.get(`http://54.176.19.199:3003/api/instructors/${id}`)
@@ -74,7 +75,7 @@ class Title extends React.Component {
     //   })
     //   .catch(err => console.log('Cannot get instructors', err));
 
-
+    //get offeredBy data
     // axios.get(`http://54.176.19.199:3003/api/offeredBy/${id}`)
     //   .then(response => {
     //     this.setState({
@@ -83,6 +84,7 @@ class Title extends React.Component {
     //   })
     //   .catch(err => console.log('Cannot get offered by', err));
 
+    //get primaryInstructor image data
     // axios.get(`http://54.176.19.199:3006/api/image/${id}/primaryInstructor `)
     //   .then(response => {
     //     this.setState({
@@ -92,6 +94,7 @@ class Title extends React.Component {
     //   .catch(err => console.log('Could not get images', err));
 
 
+    //get reviews data
     // axios.get(`http://3.139.47.159/api/totalReviewScore/${id}`)
     //   .then(response => {
     //     this.setState({
