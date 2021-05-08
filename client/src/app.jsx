@@ -43,7 +43,7 @@ class Title extends React.Component {
       var id = uri[uri.length - 1] === '' ? 1 : uri[uri.length - 1];
     }
 
-    axios.get(`http://3.140.219.139/api/getTitle/${id}`)
+    axios.get(`http://localhost:3001/api/getTitle/${id}`)
       .then(response => {
         this.setState({
           titles: response.data
@@ -52,7 +52,7 @@ class Title extends React.Component {
       .catch(err => console.log('Issue with getting course Title', err));
 
 
-    axios.get(`http://3.140.219.139/api/getEnrolled/${id}`)
+    axios.get(`http://localhost:3001/api/getEnrolled/${id}`)
       .then(response => {
         this.setState({
           totalEnrolled: response.data,
@@ -64,53 +64,56 @@ class Title extends React.Component {
       .catch(err => console.log('Error while getting total Enrolled', err));
 
 
-    //get instructors name
+    //** TODO: Will need to uncomment the following and change the endpoint for the GET request to retrieve the data correctly later */
+    // //get instructors name
 
-    axios.get(`http://54.176.19.199:3003/api/instructors/${id}`)
-      .then(response => {
-        this.setState({
-          instructor: `${response.data[0].firstName} ${response.data[0].lastName}`
-        });
-      })
-      .catch(err => console.log('Cannot get instructors', err));
+    // axios.get(`http://54.176.19.199:3003/api/instructors/${id}`)
+    //   .then(response => {
+    //     this.setState({
+    //       instructor: `${response.data[0].firstName} ${response.data[0].lastName}`
+    //     });
+    //   })
+    //   .catch(err => console.log('Cannot get instructors', err));
+
+    //get offeredBy data
+    // axios.get(`http://54.176.19.199:3003/api/offeredBy/${id}`)
+    //   .then(response => {
+    //     this.setState({
+    //       offeredBy: response.data[0].offeredByName
+    //     });
+    //   })
+    //   .catch(err => console.log('Cannot get offered by', err));
+
+    //get primaryInstructor image data
+    // axios.get(`http://54.176.19.199:3006/api/image/${id}/primaryInstructor `)
+    //   .then(response => {
+    //     this.setState({
+    //       img: response.data.primaryInstructor
+    //     });
+    //   })
+    //   .catch(err => console.log('Could not get images', err));
 
 
-    axios.get(`http://54.176.19.199:3003/api/offeredBy/${id}`)
-      .then(response => {
-        this.setState({
-          offeredBy: response.data[0].offeredByName
-        });
-      })
-      .catch(err => console.log('Cannot get offered by', err));
-
-    axios.get(`http://54.176.19.199:3006/api/image/${id}/primaryInstructor `)
-      .then(response => {
-        this.setState({
-          img: response.data.primaryInstructor
-        });
-      })
-      .catch(err => console.log('Could not get images', err));
-
-
-    axios.get(`http://3.139.47.159/api/totalReviewScore/${id}`)
-      .then(response => {
-        this.setState({
-          totalReviews: response.data.reviewCount,
-          totalStars: response.data.totalStarScore
-        });
-      })
-      .catch(err => console.log('Could not get reviews', err));
+    //get reviews data
+    // axios.get(`http://3.139.47.159/api/totalReviewScore/${id}`)
+    //   .then(response => {
+    //     this.setState({
+    //       totalReviews: response.data.reviewCount,
+    //       totalStars: response.data.totalStarScore
+    //     });
+    //   })
+    //   .catch(err => console.log('Could not get reviews', err));
   }
 
 
   componentWillUnmount() {
     // fix Warning: Can't perform a React state update on an unmounted component
-    this.setState = (state, callback)=>{
+    this.setState = (state, callback) => {
       return;
     };
   }
 
-  onChange (e) {
+  onChange(e) {
     this.setState({
       num: Number(e.target.value)
     });
@@ -121,8 +124,8 @@ class Title extends React.Component {
   add() {
     $.ajax({
       type: 'POST',
-      url: 'http://3.140.219.139/api/addTitle',
-      data: {total: this.state.num},
+      url: 'http://localhost:3001/api/addTitle',
+      data: { total: this.state.num },
       success: () => console.log('successfully made a post')
     });
   }
@@ -164,14 +167,21 @@ class Title extends React.Component {
 
   render() {
     return (
-      <div className="title-service" style={ {backgroundImage: `linear-gradient(${this.state.color})`} }>
+      <div className="title-service" style={{ backgroundImage: `linear-gradient(${this.state.color})` }}>
+
+        {/* <div>
+          <h4>Enter number of titles to populate</h4>
+          <input value={this.state.num} onChange={this.onChange} />
+          <button onClick={this.add}> Add Titles </button>
+        </div> */}
+
         <div className="title-inner">
           <div className="title-service1">
             <div className="title-nav">
               Browse {'>'}   Department {'>'}   {this.state.titles}
             </div>
             <div className="banner-title">
-              <Titles title={this.state.titles}/>
+              <Titles title={this.state.titles} />
             </div>
             <div className="title-star">
               <Stars stars={this.stars} rating={this.state.totalStars} />
@@ -179,8 +189,8 @@ class Title extends React.Component {
               <span className="title-rating">{this.state.totalReviews} ratings</span>
             </div>
             <div className="instructor-main">
-              <img src= {this.state.img} alt="instructor" className="instructor"/>
-              <span className = "title-instructorName">
+              <img src={this.state.img} alt="instructor" className="instructor" />
+              <span className="title-instructorName">
                 {this.state.instructor}
               </span>
               {this.state.totalEnrolled > 50000 &&
@@ -194,7 +204,7 @@ class Title extends React.Component {
             <div className="title-aid">Financial aid available</div>
             <div className="enrolled">
               <span> <Enrolled enrolled={this.state.totalEnrolled} /> </span>
-              <span style = { {marginLeft: '10px'} }>already enrolled</span>
+              <span style={{ marginLeft: '10px' }}>already enrolled</span>
             </div>
           </div>
           <div className="side-bar">
@@ -205,6 +215,8 @@ class Title extends React.Component {
           </div>
         </div>
       </div>
+
+
     );
   }
 }

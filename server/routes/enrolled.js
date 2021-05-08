@@ -14,7 +14,7 @@ let saveEnrolled = (randomData, cb) => {
     const enrolled = data;
     const id = String(idArray[index]);
 
-    Enrolled.findOne({enrolled: enrolled}, (err, data) => {
+    Enrolled.findOne({ enrolled: enrolled }, (err, data) => {
       if (err) { console.log(err); }
       if (data) {
         cb(`${title} already exists in db`);
@@ -31,6 +31,7 @@ let saveEnrolled = (randomData, cb) => {
   });
 };
 
+
 router.route('/getEnrolled/:id').get((req, res) => {
   // using a hack to populate enrolled table
   //totalEnrolled.saveEnrolled(exampleEnrolledGenerator());
@@ -46,9 +47,78 @@ router.route('/getEnrolled/:id').get((req, res) => {
     }
   });
 
-  Enrolled.find({id: req.params.id})
+  Enrolled.find({ id: req.params.id })
     .then(data => res.status(200).json(data[0].enrolled))
     .catch(err => res.status(404).json(err));
 });
+
+
+
+
+//Create operation - given an enrolled num and an id, create a new entry
+router.route('/postEnrolled').post((req, res) => {
+  //save a new document to the db
+  const id = req.body.id;
+  const enrolled = req.body.enrolled;
+  //take care of duplicates
+  Enrolled.findOne({ id: req.body.id }, (err, data) => {
+    if (err) { console.log(err); }
+    if (data) {
+      res.json(`${id} already exists in db`)
+      console.log(`${id} already exists in db`);
+    } else {
+      const item = new Enrolled({
+        id,
+        enrolled
+      });
+      item.save()
+        .then((title) => res.status(200).json(item))
+        .catch(err => res.send(err));
+    }
+  });
+});
+
+
+
+//Read Operation - given a specific id
+router.route('/retrieveEnrolled/:id').get((req, res) => {
+  Enrolled.find({ id: req.params.id })
+    .then(data => res.status(200).json(data[0].enrolled))
+    .catch(err => res.status(404).json(err));
+});
+
+
+//Update Operation - given a specific id
+router.route('/updateEnrolled/:id').put((req, res) => {
+  Enrolled.updateOne({ id: req.params.id },
+    { enrolled: req.body.enrolled })
+    .then(() => {
+      Enrolled.find({ id: req.params.id })
+        .then(data => {
+          res.status(200).json(data[0].enrolled);
+          console.log('DATA', data);
+        });
+    })
+    .catch(err => {
+      res.status(400).send(err);
+      console.log('item not found');
+    });
+});
+
+
+//Delete Operation - given a specific id
+router.route('/deleteEnrolled/:id').delete((req, res) => {
+  Enrolled.deleteOne({ id: req.params.id },
+    function (err, data) {
+      if (err) {
+        res.status(400).json(err);
+        console.log(err);
+      } else {
+        res.json(`Enrolled and id for id ${req.params.id} removed from database...`);
+        console.log('Data Deleted!');
+      }
+    });
+});
+
 
 module.exports = router;

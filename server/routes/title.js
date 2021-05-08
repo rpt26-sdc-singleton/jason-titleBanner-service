@@ -13,7 +13,8 @@ let saveTile = (randomData, cb) => {
     const title = data;
     const id = String(idArray[index]);
 
-    Title.findOne({title: title}, (err, data) => {
+    //take care of duplicates
+    Title.findOne({ title: title }, (err, data) => {
       if (err) { console.log(err); }
       if (data) {
         cb(`${title} already exists in db`);
@@ -30,16 +31,8 @@ let saveTile = (randomData, cb) => {
   });
 };
 
-router.route('/getTitle/:id').get((req, res) => {
-  Title.find({id: req.params.id})
-    .then(data => {
-      res.status(200).json(data[0].title);
-    })
-    .catch(err => res.status(400).json(err));
-});
 
-
-//seeding route
+//seeding route - Create operation
 router.route('/addTitle').post((req, res) => {
   var titleName = dataGeneratorFunction.exampleDataGenerator(req.body.total);
   saveTile(titleName, (data, err) => {
@@ -54,6 +47,52 @@ router.route('/addTitle').post((req, res) => {
 });
 
 
+//Retrieve/Read operation
+router.route('/getTitle/:id').get((req, res) => {
+  Title.find({ id: req.params.id })
+    .then(data => {
+      res.status(200).json(data[0].title);
+    })
+    .catch(err => {
+      res.status(400).send(err);
+      console.log('item not found');
+    });
+});
 
+
+
+//Update operation - given an id and new title as input through the req object
+router.route('/updateTitle/:id').put((req, res) => {
+  //update the one item
+  Title.updateOne({ id: req.params.id },
+    { title: req.body.title })
+    .then(() => {
+      Title.find({ id: req.params.id })
+        .then(data => {
+          res.status(200).json(data[0].title);
+          console.log('DATA', data);
+        });
+    })
+    .catch(err => {
+      res.status(400).send(err);
+      console.log('item not found');
+    });
+});
+
+
+//Delete operation - given an id as input through the req object
+router.route('/deleteTitle/:id').delete((req, res) => {
+  //find the item and delete
+  Title.deleteOne({ id: req.params.id },
+    function (err, data) {
+      if (err) {
+        res.status(400).json(err);
+        console.log(err);
+      } else {
+        res.status(200).json(`Title and id for id ${req.params.id} removed from database...`);
+        console.log('Data Deleted!');
+      }
+    });
+});
 
 module.exports = router;
