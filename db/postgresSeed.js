@@ -14,10 +14,10 @@ const client = new Client({
 client.connect();
 
 //import the data generation module
-const generator = require('../server/dataGeneration.js')
+const {dataGenerator} = require('../server/dataGeneration.js')
 
 //seeding function
-var seedPostgres = () => {
+var seedPostgres = async () => {
   //create a table in the db that I want
   const tableQuery = `
   CREATE TABLE titles (
@@ -26,17 +26,17 @@ var seedPostgres = () => {
     enrolled INT
   );
   `;
-  //invoke the above query
-  client.query(tableQuery)
-    .then(res => {console.log('Table successfully created');
-    })
-    .catch(err => {
-      console.err(err);
-    })
-    .finally(() => {
+  //invoke the above query - using async logic
+    try {
+      const res = await client.query(tableQuery);
+      console.log('Table successfully created');
+    } catch (err) {
+      console.error(err);
+    } finally {
       client.end();
-    });
+    }
   //set a new array var equal to the invocation of data gen function with 10 million records
+  var titleObjects = dataGenerator(10000000);
 
   //iterate over this array
 

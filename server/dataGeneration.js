@@ -23,7 +23,7 @@ let dataGenerator = (inputNum) => {
     newObj.enrolled = enrolled;
     //push the object to the titleObjects array
     titleObjects.push(newObj);
-    console.log(`id ${newObj.id} with title ${newObj.title} added to db`);
+    // console.log(`id ${newObj.id} with title ${newObj.title} added to db`);
   }
   console.log(`finished data generation, ${titleObjects.length} objects in titleObjects array`);
   console.log('ARRAY', titleObjects);
