@@ -40,14 +40,14 @@ var seedPostgres = async () => {
     // }
 
   //set a new array var equal to the invocation of data gen function with 10 million records
-  var titleObjects = dataGenerator(1000);
+  var titleObjects = dataGenerator(10);
 
   //iterate over this array
   for (let i = 0; i < titleObjects.length; i++) {
     const {title, enrolled} = titleObjects[i];
     //create the insertion query
     const insertionQuery =
-    `INSERT INTO titles (enrolled) VALUES (${enrolled})`;
+    `INSERT INTO titles (title, enrolled) VALUES ('${title}', ${enrolled})`;
     //create new entry for each item in the array -> *MUST use async logic though
     try {
       const inserted = await client.query(insertionQuery);
