@@ -32,15 +32,33 @@ var seedPostgres = async () => {
       console.log('Table successfully created');
     } catch (err) {
       console.error(err);
-    } finally {
-      client.end();
     }
+    // finally {
+    //   client.end();
+    // }
   //set a new array var equal to the invocation of data gen function with 10 million records
-  var titleObjects = dataGenerator(10000000);
+  var titleObjects = dataGenerator(10);
 
   //iterate over this array
-
-  //create new entry for each item in the array -> *MUST use async logic though
+  for (let i = 0; i < titleObjects.length; i++) {
+    const {title, enrolled} = titleObjects[i];
+    //create the insertion query
+    const insertionQuery =
+    `INSERT INTO titles (title, enrolled) VALUES (${title}, ${enrolled})`;
+    //create new entry for each item in the array -> *MUST use async logic though
+    try {
+      const inserted = await client.query(insertionQuery);
+    } catch (err) {
+      console.error(err);
+    }
+    // finally {
+    //   client.end();
+    // }
+  }
+  console.log('finished seeding to Postgres');
+  //end the client connection
+  client.end();
+  //TODO: display the time taken to seed
 
 
 }
