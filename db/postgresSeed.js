@@ -18,6 +18,8 @@ const {dataGenerator} = require('../server/dataGeneration.js')
 
 //seeding function
 var seedPostgres = async () => {
+  //start the timer
+  console.time(seedPostgres);
   //create a table in the db that I want
   const tableQuery = `
   CREATE TABLE titles (
@@ -36,15 +38,16 @@ var seedPostgres = async () => {
     // finally {
     //   client.end();
     // }
+
   //set a new array var equal to the invocation of data gen function with 10 million records
-  var titleObjects = dataGenerator(10);
+  var titleObjects = dataGenerator(1000);
 
   //iterate over this array
   for (let i = 0; i < titleObjects.length; i++) {
     const {title, enrolled} = titleObjects[i];
     //create the insertion query
     const insertionQuery =
-    `INSERT INTO titles (title, enrolled) VALUES (${title}, ${enrolled})`;
+    `INSERT INTO titles (enrolled) VALUES (${enrolled})`;
     //create new entry for each item in the array -> *MUST use async logic though
     try {
       const inserted = await client.query(insertionQuery);
@@ -58,8 +61,8 @@ var seedPostgres = async () => {
   console.log('finished seeding to Postgres');
   //end the client connection
   client.end();
-  //TODO: display the time taken to seed
-
+  //display the time taken to seed
+  console.timeEnd(seedPostgres);
 
 }
 
