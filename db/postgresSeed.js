@@ -41,10 +41,10 @@ var seedPostgres = async () => {
 
   //iterate over this array
   for (let i = 0; i < titleObjects.length; i++) {
-    const {title, enrolled} = titleObjects[i];
+    const {id, title, enrolled} = titleObjects[i];
     //create the insertion query
     const insertionQuery =
-    `INSERT INTO titles (title, enrolled) VALUES ('${title}', ${enrolled})`;
+    `INSERT INTO titles (ID, title, enrolled) VALUES (${id}, '${title}', ${enrolled})`;
     //create new entry for each item in the array -> *MUST use async logic though
     try {
       const inserted = await client.query(insertionQuery);
