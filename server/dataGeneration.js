@@ -15,6 +15,11 @@ let dataGenerator = (inputNum) => {
     newObj.id = id;
     //create a new faker title
     var title = faker.random.words(2);
+    //while the title contains a quotation char
+    while (title.includes('\'')) {
+      //then redo the title generation
+      title = faker.random.words(2);
+    }
     //set title prop of obj to the above
     newObj.title = title;
     //create new enrolled number
@@ -23,10 +28,10 @@ let dataGenerator = (inputNum) => {
     newObj.enrolled = enrolled;
     //push the object to the titleObjects array
     titleObjects.push(newObj);
-    console.log(`id ${newObj.id} with title ${newObj.title} added to db`);
+    // console.log(`id ${newObj.id} with title ${newObj.title} added to db`);
   }
   console.log(`finished data generation, ${titleObjects.length} objects in titleObjects array`);
-  console.log('ARRAY', titleObjects);
+  // console.log('ARRAY', titleObjects);
   //return the array containing all objects
   return titleObjects;
 }
