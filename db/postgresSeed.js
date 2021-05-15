@@ -23,7 +23,7 @@ var seedPostgres = async () => {
   //create a table in the db that I want
   const tableQuery = `
   CREATE TABLE titles (
-    ID SERIAL PRIMARY KEY,
+    ID INT PRIMARY KEY,
     title VARCHAR(60),
     enrolled INT
   );
@@ -35,9 +35,6 @@ var seedPostgres = async () => {
     } catch (err) {
       console.error(err);
     }
-    // finally {
-    //   client.end();
-    // }
 
   //set a new array var equal to the invocation of data gen function with 10 million records
   var titleObjects = dataGenerator(10000000);
@@ -45,9 +42,6 @@ var seedPostgres = async () => {
   //iterate over this array
   for (let i = 0; i < titleObjects.length; i++) {
     const {title, enrolled} = titleObjects[i];
-    if (title.includes('Ivoire') || title.includes('anga')) {
-      console.log('TITLE', title);
-    }
     //create the insertion query
     const insertionQuery =
     `INSERT INTO titles (title, enrolled) VALUES ('${title}', ${enrolled})`;
@@ -57,9 +51,6 @@ var seedPostgres = async () => {
     } catch (err) {
       console.error(err);
     }
-    // finally {
-    //   client.end();
-    // }
   }
   console.log('finished seeding to Postgres');
   //end the client connection

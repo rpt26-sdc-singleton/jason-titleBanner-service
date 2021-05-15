@@ -31,7 +31,7 @@ let dataGenerator = (inputNum) => {
     // console.log(`id ${newObj.id} with title ${newObj.title} added to db`);
   }
   console.log(`finished data generation, ${titleObjects.length} objects in titleObjects array`);
-  console.log('ARRAY', titleObjects);
+  // console.log('ARRAY', titleObjects);
   //return the array containing all objects
   return titleObjects;
 }
