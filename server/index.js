@@ -2,7 +2,12 @@
 var express = require('express');
 var cors = require('cors');
 
-//TODO: Require the postgresSeed module
+//TODO: Require postgres
+
+//TODO: Require cassandra
+
+//require the router
+var router = require('./router.js');
 
 var app = express();
 var bodyParser = require('body-parser');
@@ -48,15 +53,18 @@ const db = mongoose.connection;
 db.once('open', _ => {
   console.log('Mongo Database connected');
   whichDB = 'mongo';
+  console.log('current DB', whichDB)
 });
 
-//if the db is mongo
-//routes to get and add title
-app.use('/api', title);
+// //routes to get and add title
+// app.use('/api', title);
 
 
-//api for enrolled second table
-app.use('/api', enrolled);
+// //api for enrolled second table
+// app.use('/api', enrolled);
+
+//send requests with /api to router.js
+app.use('/api', router);
 
 
 app.get('/*', (req, res) => {
@@ -66,3 +74,7 @@ app.get('/*', (req, res) => {
 app.listen(port, function () {
   console.log(`Server started and listening on port ${port}`);
 });
+
+
+//export the whichDB variable
+module.exports = whichDB;

@@ -1,6 +1,9 @@
 //*This module contains the seeding function of the cassandra db - TODO : create command to seed the db in package.json
 var cassandra = require('cassandra-driver');
 
+//TODO: require the express router
+
+
 //access the cassandra db
 //Replace Username and Password with your cluster settings
 var authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra', 'cassandra');
