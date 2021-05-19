@@ -1,7 +1,5 @@
 //*This module contains the seeding function of the postgres db - TODO : create command to seed the db in package.json
 
-//TODO: require the express router
-
 
 //import the client to access the postgres db
 const {Client} = require('pg');
@@ -65,4 +63,4 @@ var seedPostgres = async () => {
 
 
 //invoke the seeding function
-seedPostgres();
+// seedPostgres();

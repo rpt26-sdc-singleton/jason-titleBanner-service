@@ -96,9 +96,22 @@ let saveTile = (randomData, cb) => {
 
 
 module.exports = {
-
+//seeding route - Create operation
+post: (req, res) => {
+  var titleName = dataGeneratorFunction.exampleDataGenerator(req.body.total);
+  saveTile(titleName, (data, err) => {
+    if (err) {
+      res.status(400).json(err);
+    } else {
+      console.log('Titles added successfully', data.title);
+      // mongoose.connection.close();
+    }
+  });
+  res.status(200).json('Added title names successfully');
+},
 //Retrieve/Read operation
 get: (req, res) => {
+  console.log('In the get');
   Title.find({ id: req.params.id })
     .then(data => {
       res.status(200).json(data[0].title);
