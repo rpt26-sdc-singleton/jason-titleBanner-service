@@ -60,4 +60,4 @@ var seedCassandra = async () => {
 
 
 //invoke the seeding function
-// seedCassandra();
+seedCassandra();

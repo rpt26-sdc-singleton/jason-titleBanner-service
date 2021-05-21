@@ -63,4 +63,4 @@ var seedPostgres = async () => {
 
 
 //invoke the seeding function
-// seedPostgres();
+seedPostgres();

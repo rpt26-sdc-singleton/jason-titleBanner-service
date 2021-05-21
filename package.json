@@ -2,7 +2,7 @@
   "name": "title",
   "version": "",
   "description": "",
-  "author": "Vinay Byrasandra",
+  "author": "Jason Schreiber",
   "license": "",
   "engines": {
     "node": ">=6.13.0"
