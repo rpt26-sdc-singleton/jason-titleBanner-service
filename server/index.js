@@ -65,6 +65,8 @@ app.listen(port, function () {
   console.log(`Server started and listening on port ${port}`);
 });
 
+//console.log the current db connected to
+console.log('DB', process.env.ENV_DB);
 
 //export the whichDB variable
 // module.exports = whichDB;

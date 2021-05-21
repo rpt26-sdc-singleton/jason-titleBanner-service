@@ -13,7 +13,9 @@
     "build": "webpack",
     "test": "node_modules/jest/bin/jest.js",
     "test-debug": "jest --detectOpenHandles",
-    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "start:pg": "export ENV_DB=pg && nodemon ./server/index.js",
+    "start:cass": "export ENV_DB=cass && nodemon ./server/index.js"
   },
   "dependencies": {
     "@babel/preset-env": "^7.13.10",

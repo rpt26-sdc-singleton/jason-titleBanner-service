@@ -1,3 +1,5 @@
+const router = require('express').Router();
+
 //require mongo title db module
 let Title = require('../../db/title.model');
 const mongoose = require('mongoose');
@@ -94,3 +96,5 @@ router.route('/deleteTitle/:id').delete((req, res) => {
     });
 });
 
+
+module.exports = router;
