@@ -51,7 +51,7 @@ class Title extends React.Component {
       })
       .catch(err => console.log('Issue with getting course Title', err));
 
-
+      //TODO: perhaps send this to /retrieveEnrolled?? Depends on what I am using server-side
     axios.get(`http://localhost:3001/api/getEnrolled/${id}`)
       .then(response => {
         this.setState({

@@ -2,8 +2,10 @@
 var express = require('express');
 var cors = require('cors');
 
+//Require postgres
+const {Client} = require('pg');
 
-//TODO: Require cassandra
+//Require cassandra
 var cassandra = require('cassandra-driver');
 
 //require the router
@@ -30,9 +32,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 //Create connection to postgres db
-//Require postgres
-const {Client} = require('pg');
-
 const client = new Client({
   user: 'jasonschreiber',
   host: 'localhost',
@@ -44,6 +43,7 @@ const client = new Client({
 client.connect()
   .then(() => console.log('Postgres Database connected'))
   .catch(() => console.log('Error connecting to db'));
+
 
 //Create connection to Cassandra db
 //Replace Username and Password with your cluster settings
@@ -59,6 +59,7 @@ cassClient.connect(() => {
 });
 
 
+//create mongoose connection
 mongoose.connect('mongodb://localhost:27017/TitleService', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.once('open', _ => {
@@ -87,5 +88,5 @@ app.listen(port, function () {
 //console.log the current db connected to
 console.log('DB', process.env.ENV_DB);
 
-//export the whichDB variable
-// module.exports = whichDB;
+//export the client variables for postgres and cass
+module.exports = client, cassClient;

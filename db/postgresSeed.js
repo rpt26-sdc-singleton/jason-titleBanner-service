@@ -1,18 +1,24 @@
 //*This module contains the seeding function of the postgres db - TODO : create command to seed the db in package.json
 
+//import postgres driver
+const pg = require('pg');
 
-//import the client to access the postgres db
-const {Client} = require('pg');
+//import the client from the index.js
+const {client} = require('../server/index.js');
 
-const client = new Client({
-  user: 'jasonschreiber',
-  host: 'localhost',
-  database: 'titleservice',
-  password: 'password',
-  port: 5432
-});
 
-client.connect();
+// //import the client to access the postgres db
+// const {Client} = require('pg');
+
+// const client = new Client({
+//   user: 'jasonschreiber',
+//   host: 'localhost',
+//   database: 'titleservice',
+//   password: 'password',
+//   port: 5432
+// });
+
+// client.connect();
 
 //import the data generation module
 const {dataGenerator} = require('../server/dataGeneration.js')
