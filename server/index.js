@@ -2,9 +2,9 @@
 var express = require('express');
 var cors = require('cors');
 
-//TODO: Require postgres
 
 //TODO: Require cassandra
+var cassandra = require('cassandra-driver');
 
 //require the router
 var router = require('./router.js');
@@ -28,22 +28,41 @@ dotenv.config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// //**Create conditional for which db to use*/
-// var whichDB = '';
 
 //Create connection to postgres db
+//Require postgres
+const {Client} = require('pg');
 
+const client = new Client({
+  user: 'jasonschreiber',
+  host: 'localhost',
+  database: 'titleservice',
+  password: 'password',
+  port: 5432
+});
+
+client.connect()
+  .then(() => console.log('Postgres Database connected'))
+  .catch(() => console.log('Error connecting to db'));
 
 //Create connection to Cassandra db
+//Replace Username and Password with your cluster settings
+var authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra', 'cassandra');
+//Replace PublicIP with the IP addresses of your clusters
+var contactPoints = ['127.0.0.1:9042'];
+//establish what localDataCenter to look for
+var localDataCenter = 'datacenter1';
+var cassClient = new cassandra.Client({contactPoints: contactPoints, localDataCenter: localDataCenter, authProvider: authProvider, keyspace:'sdc'});
 
+cassClient.connect(() => {
+  console.log('Cassandra Database connected');
+});
 
 
 mongoose.connect('mongodb://localhost:27017/TitleService', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.once('open', _ => {
   console.log('Mongo Database connected');
-  // whichDB = 'mongo';
-  // console.log('current DB', whichDB)
 });
 
 // //routes to get and add title
