@@ -2,7 +2,7 @@
   "name": "title",
   "version": "",
   "description": "",
-  "author": "Vinay Byrasandra",
+  "author": "Jason Schreiber",
   "license": "",
   "engines": {
     "node": ">=6.13.0"
@@ -19,6 +19,7 @@
     "@babel/preset-env": "^7.13.10",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
+    "cassandra-driver": "^4.6.2",
     "core-js": "^3.9.1",
     "express": "^4.17.1",
     "faker": "^5.4.0",
