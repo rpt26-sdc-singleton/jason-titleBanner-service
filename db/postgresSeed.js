@@ -4,7 +4,7 @@
 const pg = require('pg');
 
 //import the client from the index.js
-const {client} = require('../server/index.js');
+const {pgClient} = require('../server/index.js');
 
 
 // //import the client to access the postgres db
@@ -37,7 +37,7 @@ var seedPostgres = async () => {
   `;
   //invoke the above query - using async logic
     try {
-      const res = await client.query(tableQuery);
+      const res = await pgClient.query(tableQuery);
       console.log('Table successfully created');
     } catch (err) {
       console.error(err);
@@ -54,7 +54,7 @@ var seedPostgres = async () => {
     `INSERT INTO titles (ID, title, enrolled) VALUES (${id}, '${title}', ${enrolled})`;
     //create new entry for each item in the array -> *MUST use async logic though
     try {
-      const inserted = await client.query(insertionQuery);
+      const inserted = await pgClient.query(insertionQuery);
     } catch (err) {
       console.error(err);
     }

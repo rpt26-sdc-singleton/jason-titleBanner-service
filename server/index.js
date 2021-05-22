@@ -3,7 +3,7 @@ var express = require('express');
 var cors = require('cors');
 
 //Require postgres
-const {Pool} = require('pg');
+// const {Pool} = require('pg');
 
 //Require cassandra
 var cassandra = require('cassandra-driver');
@@ -32,17 +32,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 //Create connection to postgres db
-const pgClient = new Pool({
-  user: 'jasonschreiber',
-  host: 'localhost',
-  database: 'titleservice',
-  password: 'password',
-  port: 5432
-});
+// const pgClient = new Pool({
+//   user: 'jasonschreiber',
+//   host: 'localhost',
+//   database: 'titleservice',
+//   password: 'password',
+//   port: 5432
+// });
 
-pgClient.connect()
-  .then(() => console.log('Postgres Database connected'))
-  .catch(() => console.log('Error connecting to db'));
+// pgClient.connect()
+//   .then(() => console.log('Postgres Database connected'))
+//   .catch(() => console.log('Error connecting to db'));
 
 
 //Create connection to Cassandra db
@@ -88,7 +88,9 @@ app.listen(port, function () {
 //console.log the current db connected to
 console.log('DB', process.env.ENV_DB);
 
-console.log('PG', pgClient);
+// console.log('PG', pgClient);
+
+console.log('Cass', cassClient);
 
 //export the client variables for postgres and cass
-module.exports = pgClient, cassClient;
+// module.exports = {pgClient, cassClient};
