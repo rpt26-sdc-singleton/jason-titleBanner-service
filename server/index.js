@@ -66,11 +66,11 @@ db.once('open', _ => {
   console.log('Mongo Database connected');
 });
 
-// //routes to get and add title
+// //routes to get and add title - originally for mongo
 // app.use('/api', title);
 
 
-// //api for enrolled second table
+// //api for enrolled second table - originally for mongo
 // app.use('/api', enrolled);
 
 //send requests with /api to router.js
@@ -88,9 +88,7 @@ app.listen(port, function () {
 //console.log the current db connected to
 console.log('DB', process.env.ENV_DB);
 
-// console.log('PG', pgClient);
-
-console.log('Cass', cassClient);
+// console.log('Cass', cassClient);
 
 //export the client variables for postgres and cass
 // module.exports = {pgClient, cassClient};
