@@ -108,9 +108,19 @@ module.exports = {
 
     },
     delete: function (req, res) {
+      //create variables for the id
+      const id = req.params.id;
       //if the env db is postgres
       if (process.env.ENV_DB === 'pg') {
-
+        pgClient.query(`DELETE FROM titles WHERE id = ${id}`)
+        .then(() => {
+          res.status(200).send(`Title and id for id ${id} deleted`);
+        console.log('Data Deleted!');
+        })
+        .catch(err => {
+          res.status(400).send(err);
+          console.log(`Could not delete item ${id}`, err);
+        });
         //otherwise if the env db is cass
       } else if (process.env.ENV_DB === 'cass') {
 

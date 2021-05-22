@@ -15,7 +15,8 @@ router.get('/getTitle/:id', controller.title.get);
 
 router.put('/updateTitle/:id', controller.title.update);
 
-router.delete('/deleteTitle/:id', controller.title.delete);
+//**Important: didn't think deleting a title would make sense for user, so instead deleting entire item */
+router.delete('/deleteItem/:id', controller.title.delete);
 
 router.get('/getEnrolled/:id', controller.enrolled.get);
 
