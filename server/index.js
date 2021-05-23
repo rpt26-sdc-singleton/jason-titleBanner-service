@@ -6,7 +6,7 @@ var cors = require('cors');
 // const {Pool} = require('pg');
 
 //Require cassandra
-var cassandra = require('cassandra-driver');
+// var cassandra = require('cassandra-driver');
 
 //require the router
 var router = require('./router.js');
@@ -47,16 +47,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //Create connection to Cassandra db
 //Replace Username and Password with your cluster settings
-var authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra', 'cassandra');
-//Replace PublicIP with the IP addresses of your clusters
-var contactPoints = ['127.0.0.1:9042'];
-//establish what localDataCenter to look for
-var localDataCenter = 'datacenter1';
-var cassClient = new cassandra.Client({contactPoints: contactPoints, localDataCenter: localDataCenter, authProvider: authProvider, keyspace:'sdc'});
+// var authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra', 'cassandra');
+// //Replace PublicIP with the IP addresses of your clusters
+// var contactPoints = ['127.0.0.1:9042'];
+// //establish what localDataCenter to look for
+// var localDataCenter = 'datacenter1';
+// var cassClient = new cassandra.Client({contactPoints: contactPoints, localDataCenter: localDataCenter, authProvider: authProvider, keyspace:'sdc'});
 
-cassClient.connect(() => {
-  console.log('Cassandra Database connected');
-});
+// cassClient.connect(() => {
+//   console.log('Cassandra Database connected');
+// });
 
 
 //create mongoose connection
@@ -88,7 +88,3 @@ app.listen(port, function () {
 //console.log the current db connected to
 console.log('DB', process.env.ENV_DB);
 
-// console.log('Cass', cassClient);
-
-//export the client variables for postgres and cass
-// module.exports = {pgClient, cassClient};

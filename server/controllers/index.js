@@ -26,6 +26,18 @@ pgClient.connect()
 var cassandra = require('cassandra-driver');
 
 //Create connection to cassandra db
+//Replace Username and Password with your cluster settings
+var authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra', 'cassandra');
+//Replace PublicIP with the IP addresses of your clusters
+var contactPoints = ['127.0.0.1:9042'];
+//establish what localDataCenter to look for
+var localDataCenter = 'datacenter1';
+var cassClient = new cassandra.Client({contactPoints: contactPoints, localDataCenter: localDataCenter, authProvider: authProvider, keyspace:'sdc'});
+
+cassClient.connect(() => {
+  console.log('Cassandra Database connected');
+});
+
 
 module.exports = {
   title: {
@@ -78,7 +90,15 @@ module.exports = {
       }
       //otherwise if the env db is cass
       else if (process.env.ENV_DB === 'cass') {
-
+        //query the cass db for inputted id
+        try {
+          const results = await cassClient.execute(`SELECT title FROM titles WHERE id = ${req.params.id}`);
+          //send back the result
+          res.status(200).json(results.rows[0].title);
+        } catch (err) {
+          res.status(400).send(err);
+          console.log('item not found');
+        }
       }
     },
     update: async function (req, res) {
@@ -142,7 +162,15 @@ module.exports = {
         }
         //otherwise if the env db is cass
       } else if (process.env.ENV_DB === 'cass') {
-
+        //query the cass db for inputted id
+        try {
+          const results = await cassClient.execute(`SELECT enrolled FROM titles WHERE id = ${req.params.id}`);
+          //send back the result
+          res.status(200).json(results.rows[0].enrolled);
+        } catch (err) {
+          res.status(400).send(err);
+          console.log('item not found');
+        }
       }
     }
   }
