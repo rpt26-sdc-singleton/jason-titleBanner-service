@@ -73,7 +73,30 @@ module.exports = {
           console.log('searching for id not successful', err);
         }
       } else if (process.env.ENV_DB === 'cass') {
-
+        //take care of duplicates - if the id in the req exists already
+        try {
+          var query = await cassClient.execute(`SELECT title FROM titles WHERE id = ${id}`);
+          //if the id is already found
+          if (query.rows.length !== 0) {
+            //send response that item already exists
+            res.json(`${id} already exists in db`);
+            console.log(`${id} already exists in db`);
+            //otherwise
+          } else {
+            //query the database to insert a new title, given an input title and input id
+            try {
+              await cassClient.execute(`INSERT INTO titles (id, title, enrolled) VALUES (${id}, '${title}', 0)`);
+              res.status(200).json(`Added id ${id} with title '${title}'`);
+            } catch (err) {
+              res.status(400).send(err);
+              console.log('Error inserting into db', err);
+            };
+          }
+          //if there is an error
+        } catch (err) {
+          res.status(400).send(err);
+          console.log('searching for id not successful', err);
+        }
       }
     },
     get: async function (req, res) {
@@ -143,7 +166,15 @@ module.exports = {
         });
         //otherwise if the env db is cass
       } else if (process.env.ENV_DB === 'cass') {
-
+        cassClient.execute(`DELETE FROM titles WHERE id = ${id}`)
+        .then(() => {
+          res.status(200).send(`Title and id for id ${id} deleted`);
+        console.log('Data Deleted!');
+        })
+        .catch(err => {
+          res.status(400).send(err);
+          console.log(`Could not delete item ${id}`, err);
+        });
       }
     }
   },
@@ -176,3 +207,5 @@ module.exports = {
   }
 
 }
+
+
