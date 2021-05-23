@@ -129,10 +129,17 @@ module.exports = {
   },
 
   enrolled: {
-    get: function (req, res) {
+    get: async function (req, res) {
       //if the env db is postgres
       if (process.env.ENV_DB === 'pg') {
-
+        //query the database for the specific id
+        try {
+          const results = await pgClient.query(`SELECT enrolled FROM titles WHERE id = ${req.params.id}`);
+          res.status(200).json(results.rows[0].enrolled);
+        } catch (err) {
+          res.status(400).send(err);
+          console.log('item not found');
+        }
         //otherwise if the env db is cass
       } else if (process.env.ENV_DB === 'cass') {
 
