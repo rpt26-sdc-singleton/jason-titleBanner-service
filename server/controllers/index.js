@@ -146,7 +146,20 @@ module.exports = {
           })
         //otherwise if the env db is cass
       } else if (process.env.ENV_DB === 'cass') {
-
+        cassClient.execute(`UPDATE titles SET title = '${title}' WHERE id = ${id}`)
+          .then(() => {
+            //query the database for the specific id
+              cassClient.execute(`SELECT title FROM titles WHERE id = ${id}`)
+              .then((results) => res.status(200).json(results.rows[0].title))
+              .catch(err => {
+                res.status(400).send(err);
+              console.log(`error selecting item with id ${id}`, err);
+              });
+          })
+          .catch(err => {
+            res.status(400).send(err);
+            console.log(`Error updating id ${id}`, err);
+          })
       }
 
     },
