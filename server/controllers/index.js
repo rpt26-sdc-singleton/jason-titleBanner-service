@@ -48,9 +48,10 @@ module.exports = {
 
       //if the db is postgres
       if (process.env.ENV_DB === 'pg') {
+        const selectQuery = `SELECT title FROM titles WHERE id = ${id}`;
         //take care of duplicates - if the id in the req exists already
         try {
-          var query = await pgClient.query(`SELECT title FROM titles WHERE id = ${id}`);
+          var query = await pgClient.query(selectQuery);
           //if the id is already found
           if (query.rows.length !== 0) {
             //send response that item already exists
@@ -59,8 +60,9 @@ module.exports = {
             //otherwise
           } else {
             //query the database to insert a new title, given an input title and input id
+            const insertQuery = `INSERT INTO titles (id, title, enrolled) VALUES (${id}, '${title}', 0)`;
             try {
-              await pgClient.query(`INSERT INTO titles (id, title, enrolled) VALUES (${id}, '${title}', 0)`);
+              await pgClient.query(insertQuery);
               res.status(200).json(`Added id ${id} with title '${title}'`);
             } catch (err) {
               res.status(400).send(err);
@@ -74,8 +76,9 @@ module.exports = {
         }
       } else if (process.env.ENV_DB === 'cass') {
         //take care of duplicates - if the id in the req exists already
+        const selectExecute = `SELECT title FROM titles WHERE id = ${id}`;
         try {
-          var query = await cassClient.execute(`SELECT title FROM titles WHERE id = ${id}`);
+          var query = await cassClient.execute(selectExecute);
           //if the id is already found
           if (query.rows.length !== 0) {
             //send response that item already exists
@@ -84,8 +87,9 @@ module.exports = {
             //otherwise
           } else {
             //query the database to insert a new title, given an input title and input id
+            const insertExecute = `INSERT INTO titles (id, title, enrolled) VALUES (${id}, '${title}', 0)`
             try {
-              await cassClient.execute(`INSERT INTO titles (id, title, enrolled) VALUES (${id}, '${title}', 0)`);
+              await cassClient.execute(insertExecute);
               res.status(200).json(`Added id ${id} with title '${title}'`);
             } catch (err) {
               res.status(400).send(err);
@@ -103,8 +107,9 @@ module.exports = {
       //if the env db is postgres
       if (process.env.ENV_DB === 'pg') {
         //query the database for the specific id
+        const selectQueryString = `SELECT title FROM titles WHERE id = ${req.params.id}`
         try {
-          const results = await pgClient.query(`SELECT title FROM titles WHERE id = ${req.params.id}`);
+          const results = await pgClient.query(selectQueryString);
           res.status(200).json(results.rows[0].title);
         } catch (err) {
           res.status(400).send(err);
@@ -114,8 +119,9 @@ module.exports = {
       //otherwise if the env db is cass
       else if (process.env.ENV_DB === 'cass') {
         //query the cass db for inputted id
+        const selectExecuteString = `SELECT title FROM titles WHERE id = ${req.params.id}`;
         try {
-          const results = await cassClient.execute(`SELECT title FROM titles WHERE id = ${req.params.id}`);
+          const results = await cassClient.execute(selectExecuteString);
           //send back the result
           res.status(200).json(results.rows[0].title);
         } catch (err) {
@@ -130,10 +136,12 @@ module.exports = {
       const title = req.body.title;
       //if the env db is postgres
       if (process.env.ENV_DB === 'pg') {
-        pgClient.query(`UPDATE titles SET title = '${title}' WHERE id = ${id}`)
+        const updateQueryString = `UPDATE titles SET title = '${title}' WHERE id = ${id}`;
+        pgClient.query(updateQueryString)
           .then(() => {
             //query the database for the specific id
-              pgClient.query(`SELECT title FROM titles WHERE id = ${id}`)
+            const queryFindItem = `SELECT title FROM titles WHERE id = ${id}`;
+              pgClient.query(queryFindItem)
               .then((results) => res.status(200).json(results.rows[0].title))
               .catch(err => {
                 res.status(400).send(err);
@@ -146,10 +154,12 @@ module.exports = {
           })
         //otherwise if the env db is cass
       } else if (process.env.ENV_DB === 'cass') {
-        cassClient.execute(`UPDATE titles SET title = '${title}' WHERE id = ${id}`)
+        const updateExecuteString = `UPDATE titles SET title = '${title}' WHERE id = ${id}`;
+        cassClient.execute(updateExecuteString)
           .then(() => {
             //query the database for the specific id
-              cassClient.execute(`SELECT title FROM titles WHERE id = ${id}`)
+            const executeFindItem = `SELECT title FROM titles WHERE id = ${id}`
+              cassClient.execute(executeFindItem)
               .then((results) => res.status(200).json(results.rows[0].title))
               .catch(err => {
                 res.status(400).send(err);
@@ -168,7 +178,8 @@ module.exports = {
       const id = req.params.id;
       //if the env db is postgres
       if (process.env.ENV_DB === 'pg') {
-        pgClient.query(`DELETE FROM titles WHERE id = ${id}`)
+        const deleteQueryString = `DELETE FROM titles WHERE id = ${id}`;
+        pgClient.query(deleteQueryString)
         .then(() => {
           res.status(200).send(`Title and id for id ${id} deleted`);
         console.log('Data Deleted!');
@@ -179,7 +190,8 @@ module.exports = {
         });
         //otherwise if the env db is cass
       } else if (process.env.ENV_DB === 'cass') {
-        cassClient.execute(`DELETE FROM titles WHERE id = ${id}`)
+        const deleteExecuteString = `DELETE FROM titles WHERE id = ${id}`;
+        cassClient.execute(deleteExecuteString)
         .then(() => {
           res.status(200).send(`Title and id for id ${id} deleted`);
         console.log('Data Deleted!');
@@ -197,8 +209,9 @@ module.exports = {
       //if the env db is postgres
       if (process.env.ENV_DB === 'pg') {
         //query the database for the specific id
+        const queryString = `SELECT enrolled FROM titles WHERE id = ${req.params.id}`;
         try {
-          const results = await pgClient.query(`SELECT enrolled FROM titles WHERE id = ${req.params.id}`);
+          const results = await pgClient.query(queryString);
           res.status(200).json(results.rows[0].enrolled);
         } catch (err) {
           res.status(400).send(err);
@@ -207,8 +220,9 @@ module.exports = {
         //otherwise if the env db is cass
       } else if (process.env.ENV_DB === 'cass') {
         //query the cass db for inputted id
+        const executeString = `SELECT enrolled FROM titles WHERE id = ${req.params.id}`;
         try {
-          const results = await cassClient.execute(`SELECT enrolled FROM titles WHERE id = ${req.params.id}`);
+          const results = await cassClient.execute(executeString);
           //send back the result
           res.status(200).json(results.rows[0].enrolled);
         } catch (err) {
