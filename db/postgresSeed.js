@@ -1,18 +1,24 @@
 //*This module contains the seeding function of the postgres db - TODO : create command to seed the db in package.json
 
+//import postgres driver
+const pg = require('pg');
 
-//import the client to access the postgres db
-const {Client} = require('pg');
+//import the client from the index.js
+const {pgClient} = require('../server/index.js');
 
-const client = new Client({
-  user: 'jasonschreiber',
-  host: 'localhost',
-  database: 'titleservice',
-  password: 'password',
-  port: 5432
-});
 
-client.connect();
+// //import the client to access the postgres db
+// const {Client} = require('pg');
+
+// const client = new Client({
+//   user: 'jasonschreiber',
+//   host: 'localhost',
+//   database: 'titleservice',
+//   password: 'password',
+//   port: 5432
+// });
+
+// client.connect();
 
 //import the data generation module
 const {dataGenerator} = require('../server/dataGeneration.js')
@@ -31,7 +37,7 @@ var seedPostgres = async () => {
   `;
   //invoke the above query - using async logic
     try {
-      const res = await client.query(tableQuery);
+      const res = await pgClient.query(tableQuery);
       console.log('Table successfully created');
     } catch (err) {
       console.error(err);
@@ -48,7 +54,7 @@ var seedPostgres = async () => {
     `INSERT INTO titles (ID, title, enrolled) VALUES (${id}, '${title}', ${enrolled})`;
     //create new entry for each item in the array -> *MUST use async logic though
     try {
-      const inserted = await client.query(insertionQuery);
+      const inserted = await pgClient.query(insertionQuery);
     } catch (err) {
       console.error(err);
     }

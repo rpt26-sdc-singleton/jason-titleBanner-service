@@ -1,41 +1,29 @@
+//intermediary module to contain the module to go to for the routes
+
 //import the express router
 var router = require('express').Router();
 
-//import conditional var from index.js - determines which routes to use
-const {whichDB} = require('./index.js');
-//import the title.js and enrolled.js modules for mongo routes
-const title = require('./routes/title.js');
-const enrolled = require('./routes/enrolled.js');
+//import the controller module
+const controller = require('./controllers');
 
-//import the postgresSeed module
+console.log('Im in the router');
 
-//import the cassandraSeed module
+//Connect controller methods to their corresponding routes
+router.post('/addTitle', controller.title.post);
 
-console.log('Im in the router', whichDB);
+router.get('/getTitle/:id', controller.title.get);
 
-//if the db is mongo
-if (whichDB === 'mongo') {
-  console.log('in the if statement');
-  //route to add a title
-  router.post('/addTitle', title.post);
-  //route to get title
-  router.get('/getTitle/:id', title.get);
-}
+router.put('/updateTitle/:id', controller.title.update);
 
-//if the process.env.db is postgres
-  //route to get title
+//**Important: didn't think deleting a title would make sense for user, so instead deleting entire item */
+router.delete('/deleteItem/:id', controller.title.delete);
 
-  //route to get enrolled
+router.get('/getEnrolled/:id', controller.enrolled.get);
 
+//TODO: other CRUD routes for enroll - think about user experience
+// router.update('/updateEnrolled/:id', controller.enrolled.post);
 
-
-//otherwise if the process.env.db is cassandra
-  //route to get title
-
-  //route to get enrolled
-
-
-
+// router.delete('/deleteEnrolled/:id', controller.enrolled.delete);
 
 
 //export the router

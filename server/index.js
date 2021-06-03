@@ -2,9 +2,11 @@
 var express = require('express');
 var cors = require('cors');
 
-//TODO: Require postgres
+//Require postgres
+// const {Pool} = require('pg');
 
-//TODO: Require cassandra
+//Require cassandra
+// var cassandra = require('cassandra-driver');
 
 //require the router
 var router = require('./router.js');
@@ -28,29 +30,47 @@ dotenv.config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// //**Create conditional for which db to use*/
-// var whichDB = '';
 
 //Create connection to postgres db
+// const pgClient = new Pool({
+//   user: 'jasonschreiber',
+//   host: 'localhost',
+//   database: 'titleservice',
+//   password: 'password',
+//   port: 5432
+// });
+
+// pgClient.connect()
+//   .then(() => console.log('Postgres Database connected'))
+//   .catch(() => console.log('Error connecting to db'));
 
 
 //Create connection to Cassandra db
+//Replace Username and Password with your cluster settings
+// var authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra', 'cassandra');
+// //Replace PublicIP with the IP addresses of your clusters
+// var contactPoints = ['127.0.0.1:9042'];
+// //establish what localDataCenter to look for
+// var localDataCenter = 'datacenter1';
+// var cassClient = new cassandra.Client({contactPoints: contactPoints, localDataCenter: localDataCenter, authProvider: authProvider, keyspace:'sdc'});
+
+// cassClient.connect(() => {
+//   console.log('Cassandra Database connected');
+// });
 
 
-
+//create mongoose connection
 mongoose.connect('mongodb://localhost:27017/TitleService', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.once('open', _ => {
   console.log('Mongo Database connected');
-  // whichDB = 'mongo';
-  // console.log('current DB', whichDB)
 });
 
-// //routes to get and add title
+// //routes to get and add title - originally for mongo
 // app.use('/api', title);
 
 
-// //api for enrolled second table
+// //api for enrolled second table - originally for mongo
 // app.use('/api', enrolled);
 
 //send requests with /api to router.js
@@ -65,6 +85,6 @@ app.listen(port, function () {
   console.log(`Server started and listening on port ${port}`);
 });
 
+//console.log the current db connected to
+console.log('DB', process.env.ENV_DB);
 
-//export the whichDB variable
-// module.exports = whichDB;

@@ -1,19 +1,21 @@
 //*This module contains the seeding function of the cassandra db - TODO : create command to seed the db in package.json
-var cassandra = require('cassandra-driver');
+const cassandra = require('cassandra-driver');
 
+//import the cass client from the index.js
+const {cassClient} = require('../server/index.js');
 
-//access the cassandra db
-//Replace Username and Password with your cluster settings
-var authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra', 'cassandra');
-//Replace PublicIP with the IP addresses of your clusters
-var contactPoints = ['127.0.0.1:9042'];
-//establish what localDataCenter to look for
-var localDataCenter = 'datacenter1';
-var client = new cassandra.Client({contactPoints: contactPoints, localDataCenter: localDataCenter, authProvider: authProvider, keyspace:'sdc'});
+// //access the cassandra db
+// //Replace Username and Password with your cluster settings
+// var authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra', 'cassandra');
+// //Replace PublicIP with the IP addresses of your clusters
+// var contactPoints = ['127.0.0.1:9042'];
+// //establish what localDataCenter to look for
+// var localDataCenter = 'datacenter1';
+// var client = new cassandra.Client({contactPoints: contactPoints, localDataCenter: localDataCenter, authProvider: authProvider, keyspace:'sdc'});
 
-client.connect(() => {
-  console.log('Cassandra db connected');
-});
+// client.connect(() => {
+//   console.log('Cassandra db connected');
+// });
 
 //import the data generation module
 const { dataGenerator } = require('../server/dataGeneration.js')
@@ -28,7 +30,7 @@ var seedCassandra = async () => {
   `;
   //invoke the above query - using async logic
   try {
-    const res = await client.execute(tableQuery);
+    const res = await cassClient.execute(tableQuery);
     console.log('Table successfully created');
   } catch (err) {
     console.error(err);
@@ -45,14 +47,14 @@ var seedCassandra = async () => {
       `INSERT INTO titles (id, title, enrolled) VALUES (${id}, '${title}', ${enrolled})`;
     //create new entry for each item in the array -> *MUST use async logic though
     try {
-      const inserted = await client.execute(insertionQuery);
+      const inserted = await cassClient.execute(insertionQuery);
     } catch (err) {
       console.error(err);
     }
   }
   console.log('finished seeding to Cassandra');
   //end the client connection
-  client.shutdown();
+  cassClient.shutdown();
   //display the time taken to seed
   console.timeEnd(seedCassandra);
 
