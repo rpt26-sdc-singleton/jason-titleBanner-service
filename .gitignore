@@ -27,3 +27,5 @@ coverage
 newrelic.js
 
 k6script.js
+
+sdc-titleService.pem
