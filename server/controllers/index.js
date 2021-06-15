@@ -1,15 +1,16 @@
 //module to contain the controller functions for postgres and cassandra
+require('dotenv').config();
 
 //Require postgres
 const { Pool } = require('pg');
 
 //Create connection to postgres db
 const pgClient = new Pool({
-  user: 'jasonschreiber',
-  host: 'localhost',
-  database: 'titleservice',
-  password: 'password',
-  port: 5432
+  user: process.env.PG_USER,
+  host: process.env.PG_HOST,
+  database: process.env.PG_DB,
+  password: process.env.PG_PASSWORD,
+  port: process.env.PG_PORT
 });
 
 pgClient.connect()
@@ -17,18 +18,17 @@ pgClient.connect()
   .catch(() => console.log('Error connecting to db'));
 
 
-
-//Reauire cassandra
+//Require cassandra
 var cassandra = require('cassandra-driver');
 
 //Create connection to cassandra db
 //Replace Username and Password with your cluster settings
-var authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra', 'cassandra');
+var authProvider = new cassandra.auth.PlainTextAuthProvider(process.env.CASS_USER, process.env.CASS_PASS);
 //Replace PublicIP with the IP addresses of your clusters
-var contactPoints = ['127.0.0.1:9042'];
+var contactPoints = [process.env.CASS_CONTACT_POINT1];
 //establish what localDataCenter to look for
-var localDataCenter = 'datacenter1';
-var cassClient = new cassandra.Client({contactPoints: contactPoints, localDataCenter: localDataCenter, authProvider: authProvider, keyspace:'sdc'});
+var localDataCenter = process.env.CASS_DATACENTER;
+var cassClient = new cassandra.Client({contactPoints: contactPoints, localDataCenter: localDataCenter, authProvider: authProvider, keyspace: process.env.CASS_KEYSPACE});
 
 cassClient.connect(() => {
   console.log('Cassandra Database connected');
