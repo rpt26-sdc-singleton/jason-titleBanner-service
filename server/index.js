@@ -1,12 +1,6 @@
-
+require('newrelic');
 var express = require('express');
 var cors = require('cors');
-
-//Require postgres
-// const {Pool} = require('pg');
-
-//Require cassandra
-// var cassandra = require('cassandra-driver');
 
 //require the router
 var router = require('./router.js');
@@ -29,34 +23,6 @@ dotenv.config();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-
-//Create connection to postgres db
-// const pgClient = new Pool({
-//   user: 'jasonschreiber',
-//   host: 'localhost',
-//   database: 'titleservice',
-//   password: 'password',
-//   port: 5432
-// });
-
-// pgClient.connect()
-//   .then(() => console.log('Postgres Database connected'))
-//   .catch(() => console.log('Error connecting to db'));
-
-
-//Create connection to Cassandra db
-//Replace Username and Password with your cluster settings
-// var authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra', 'cassandra');
-// //Replace PublicIP with the IP addresses of your clusters
-// var contactPoints = ['127.0.0.1:9042'];
-// //establish what localDataCenter to look for
-// var localDataCenter = 'datacenter1';
-// var cassClient = new cassandra.Client({contactPoints: contactPoints, localDataCenter: localDataCenter, authProvider: authProvider, keyspace:'sdc'});
-
-// cassClient.connect(() => {
-//   console.log('Cassandra Database connected');
-// });
 
 
 //create mongoose connection

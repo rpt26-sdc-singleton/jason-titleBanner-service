@@ -1,9 +1,5 @@
 //module to contain the controller functions for postgres and cassandra
 
-//import the client and cassClient from server/index.js
-// const { pgClient, cassClient } = require('../index.js');
-
-
 //Require postgres
 const { Pool } = require('pg');
 
