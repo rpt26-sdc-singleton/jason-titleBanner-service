@@ -6,12 +6,12 @@ const {cassClient} = require('../server/index.js');
 
 // //access the cassandra db
 // //Replace Username and Password with your cluster settings
-// var authProvider = new cassandra.auth.PlainTextAuthProvider('cassandra', 'cassandra');
+// var authProvider = new cassandra.auth.PlainTextAuthProvider(process.env.CASS_USER, process.env.CASS_PASS);
 // //Replace PublicIP with the IP addresses of your clusters
-// var contactPoints = ['127.0.0.1:9042'];
+// var contactPoints = [process.env.CASS_CONTACT_POINT1];
 // //establish what localDataCenter to look for
-// var localDataCenter = 'datacenter1';
-// var client = new cassandra.Client({contactPoints: contactPoints, localDataCenter: localDataCenter, authProvider: authProvider, keyspace:'sdc'});
+// var localDataCenter = process.env.CASS_DATACENTER;
+// var client = new cassandra.Client({contactPoints: contactPoints, localDataCenter: localDataCenter, authProvider: authProvider, keyspace: process.env.CASS_KEYSPACE});
 
 // client.connect(() => {
 //   console.log('Cassandra db connected');

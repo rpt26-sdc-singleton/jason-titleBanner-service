@@ -26,11 +26,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 //create mongoose connection
-mongoose.connect('mongodb://localhost:27017/TitleService', { useNewUrlParser: true, useUnifiedTopology: true });
-const db = mongoose.connection;
-db.once('open', _ => {
-  console.log('Mongo Database connected');
-});
+// mongoose.connect('mongodb://localhost:27017/TitleService', { useNewUrlParser: true, useUnifiedTopology: true });
+// const db = mongoose.connection;
+// db.once('open', _ => {
+//   console.log('Mongo Database connected');
+// });
 
 // //routes to get and add title - originally for mongo
 // app.use('/api', title);
